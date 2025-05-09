@@ -1,24 +1,20 @@
 #include "raylib.h"
 #include "Karakter.hpp"
+#include "GirdiKontrolcu.hpp"
 
 int main() {
-    const int screenWidth = 6*64;
-    const int screenHeight = 6*64;
-    Color zeminrengi = {122,146,148};
-    InitWindow(screenWidth, screenHeight, "2D Oyun Projesi");
+    
     SetTargetFPS(60);
-
-    Karakter adam("resources/adam.png" , 3*64, 3*64);
-
-    while (!WindowShouldClose()) {
-        adam.Guncelle();
-        
+    InitWindow(6*64, 6*64, "2D Oyun Projesi");
+    Karakter* adam = new Karakter({8,9});
+    while(!WindowShouldClose()){
+        GirdiKontrolcu::HareketKontrol();
+        adam->Guncelle();
         BeginDrawing();
-            ClearBackground(zeminrengi);
-            adam.Ciz();
+            ClearBackground(WHITE);
+            adam->Ciz();
         EndDrawing();
     }
-
     CloseWindow();
     return 0;
 }
