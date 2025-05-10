@@ -1,12 +1,28 @@
-#include <vector>
+#ifndef SEVIYELER_HPP
+#define SEVIYELER_HPP
 
-std::vector<std::vector<int>> temsiliHarita = {
-            {0,1,1,1,1,1,0,0,0},
-            {0,1,0,0,0,1,1,0,0},
-            {0,1,0,0,0,0,1,0,0},
-            {0,1,1,0,0,0,1,0,0},
-            {0,0,1,1,0,0,1,0,0},
-            {0,0,0,1,1,0,1,0,0},
-            {0,0,0,0,1,1,1,0,0},
-            {0,0,0,0,0,0,0,0,0}
+#include <vector>
+#include <string>
+#include "raylib.h"
+#include "DokuYonetici.hpp"
+
+struct SandikStruct {
+    Vector2 pozisyon;
+    std::string renk;
 };
+
+struct HedefStruct {
+    Vector2 pozisyon;
+    std::string renk;
+};
+
+struct Seviye {
+    std::vector<std::vector<int>> harita;
+    Vector2 karakterBaslangic;
+    std::vector<SandikStruct> sandiklar;
+    std::vector<HedefStruct> hedefler;
+};
+
+extern const std::vector<Seviye> SEVIYELER;
+
+#endif

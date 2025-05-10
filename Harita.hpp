@@ -5,7 +5,7 @@
 
 class Harita{
 public:
-    Harita();
+    Harita(std::vector<std::vector<int>> harita);
     ~Harita();
     void Ciz();
     

@@ -3,8 +3,8 @@
 
 Hedef::Hedef(Vector2 cizim_pozisyonu, std::string renk){
     this->renk = renk;
-    cizimPozisyonu = cizim_pozisyonu;
-    objeDokusu = DokuYonetici::DokuYukle(GorselSec());
+    this->cizimPozisyonu = cizim_pozisyonu;
+    this->objeDokusu = DokuYonetici::DokuYukle(GorselSec());
 };
 
 Hedef::~Hedef(){

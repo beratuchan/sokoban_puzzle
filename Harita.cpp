@@ -1,10 +1,10 @@
 #include "Harita.hpp"
 #include "Seviyeler.hpp"
 
-Harita::Harita(){
-    harita = temsiliHarita;
-    satirSayisi = temsiliHarita.size();
-    sutunSayisi = temsiliHarita[0].size();
+Harita::Harita(std::vector<std::vector<int>> harita){
+    this->harita = harita;
+    satirSayisi = this->harita.size();
+    sutunSayisi = this->harita[0].size();
     zemin = LoadTexture("resources/zemin.png");
     duvar = LoadTexture("resources/duvar.png");
 }
