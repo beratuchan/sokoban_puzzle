@@ -9,7 +9,7 @@
 int main() {
     SetTargetFPS(60);
     InitWindow(9*64, 8*64, "2D Oyun Projesi");
-    ObjeYonetici objeYonetici;
+    ObjeYonetici objeYonetici(1);
     while(!WindowShouldClose()){
         GirdiKontrolcu::HareketKontrol();
         BeginDrawing();

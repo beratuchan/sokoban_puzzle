@@ -1,20 +1,10 @@
 #include "ObjeYonetici.hpp"
 
-ObjeYonetici::ObjeYonetici(){
-    karakter = new Karakter({0,0});
-    harita = new Harita(      
-        {    
-            {0,0,0,1,1,1,1,0,0},
-            {0,0,1,1,0,0,1,0,0},
-            {0,0,1,0,0,0,1,1,0},
-            {0,0,1,0,0,0,0,1,0},
-            {0,0,1,0,0,0,0,1,0},
-            {0,0,1,1,0,0,1,1,0},
-            {0,0,0,1,1,1,1,0,0},
-        }
-    );
-    sandikStructlar = {{{{4*64, 4*64}, "yesil"},{{5*64, 2*64}, "mavi"}}};
-    hedefStructlar = {{{{5*64, 3*64}, "yesil"},{{4*64, 3*64}, "mavi"}}};
+ObjeYonetici::ObjeYonetici(int seviyeNo){
+    karakter = new Karakter(SEVIYELER[seviyeNo].karakter);
+    harita = new Harita(SEVIYELER[seviyeNo].harita);
+    sandikStructlar = SEVIYELER[seviyeNo].sandiklar;
+    hedefStructlar = SEVIYELER[seviyeNo].hedefler;
     SandiklariDoldur();
     HedefleriDoldur();
     ObjeleriDoldur();
@@ -24,7 +14,6 @@ ObjeYonetici::~ObjeYonetici() {
     delete karakter;
     delete harita;
 }
-
 
 void ObjeYonetici::SandiklariDoldur(){
     for(SandikStruct sandikStruct : sandikStructlar){

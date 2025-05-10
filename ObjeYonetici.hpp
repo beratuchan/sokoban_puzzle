@@ -10,7 +10,7 @@ using namespace std;
 
 class ObjeYonetici{
     public:
-        ObjeYonetici(); 
+        ObjeYonetici(int seviyeNo); 
         ~ObjeYonetici();
         void Guncelle();
         void Dongu();

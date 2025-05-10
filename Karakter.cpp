@@ -13,6 +13,27 @@ Karakter::~Karakter() {
     UnloadTexture(objeDokusu);
 }
 
+
+
+void Karakter::Guncelle() {
+    if(GirdiKontrolcu::mevcutYon != Yon::HAREKETSIZ) {
+        framesCounter++;
+        currentFrame = framesCounter;
+        AnimasyonuGuncelle();
+        switch(GirdiKontrolcu::mevcutYon) {
+            case Yon::ILERI: cizimPozisyonu.y -= 64; break;
+            case Yon::GERI: cizimPozisyonu.y += 64; break;
+            case Yon::SAGA: cizimPozisyonu.x += 64; break;
+            case Yon::SOLA: cizimPozisyonu.x -= 64; break;
+            default: break;
+        }
+    }
+}
+
+void Karakter::Ciz() {
+    DokuYonetici::DokuCiz(objeDokusu, kare, cizimPozisyonu);
+}
+
 void Karakter::AnimasyonuGuncelle() {
     switch(GirdiKontrolcu::mevcutYon) {
         case Yon::GERI:
@@ -44,23 +65,4 @@ void Karakter::AnimasyonuGuncelle() {
             framesCounter = 0;
             break;
     }
-}
-
-void Karakter::Guncelle() {
-    if(GirdiKontrolcu::mevcutYon != Yon::HAREKETSIZ) {
-        framesCounter++;
-        currentFrame = framesCounter;
-        AnimasyonuGuncelle();
-        switch(GirdiKontrolcu::mevcutYon) {
-            case Yon::ILERI: cizimPozisyonu.y -= 64; break;
-            case Yon::GERI: cizimPozisyonu.y += 64; break;
-            case Yon::SAGA: cizimPozisyonu.x += 64; break;
-            case Yon::SOLA: cizimPozisyonu.x -= 64; break;
-            default: break;
-        }
-    }
-}
-
-void Karakter::Ciz() {
-    DokuYonetici::DokuCiz(objeDokusu, kare, cizimPozisyonu);
 }
