@@ -3,6 +3,7 @@
 #include "GirdiKontrolcu.hpp"
 #include "Harita.hpp"
 #include "Hedef.hpp"
+#include "Sandik.hpp"
 
 int main() {
     SetTargetFPS(60);
@@ -10,6 +11,7 @@ int main() {
     Karakter* adam = new Karakter({0,0});
     Harita * harita = new Harita();
     Hedef* hedef = new Hedef({64*2,64*1},"yesil");
+    Sandik* sandik = new Sandik({0,64},"mavi");
 
     while(!WindowShouldClose()){
         
@@ -21,7 +23,7 @@ int main() {
             harita->Ciz();
             hedef->Ciz();
             adam->Ciz();
-
+            sandik->Ciz();
         EndDrawing();
     }
     delete adam;
