@@ -3,11 +3,12 @@
 #include "GameObject.hpp"
 #include <vector>
 
-class Harita{
+class Harita : public GameObject{
 public:
     Harita(std::vector<std::vector<int>> harita);
     ~Harita();
-    void Ciz();
+    void Guncelle() override;
+    void Ciz() override;
     
 private:
     std::vector<std::vector<int>> harita;

@@ -39,7 +39,7 @@ void ObjeYonetici::HedefleriDoldur(){
 }
 
 void ObjeYonetici::ObjeleriDoldur(){
-    
+    objeler.push_back(harita);
     for(auto& sandik : sandiklar){
         objeler.push_back(&sandik);
     }
@@ -50,7 +50,6 @@ void ObjeYonetici::ObjeleriDoldur(){
 }
 
 void ObjeYonetici::Dongu(){
-    harita->Ciz();
     for (auto* obje : objeler) {
         obje->Guncelle();  
         obje->Ciz();      

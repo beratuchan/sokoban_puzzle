@@ -26,3 +26,7 @@ void Harita::Ciz(){
         }
     }
 }
+
+void Harita::Guncelle(){
+    
+}

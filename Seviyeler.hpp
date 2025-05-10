@@ -23,6 +23,4 @@ struct Seviye {
     std::vector<HedefStruct> hedefler;
 };
 
-extern const std::vector<Seviye> SEVIYELER;
-
 #endif
