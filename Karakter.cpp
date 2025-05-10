@@ -8,6 +8,7 @@ Karakter::Karakter(Vector2 cizim_pozisyonu) {
     frameHeight = objeDokusu.height / 2;
     kare = {0, 0, (float)frameWidth, (float)frameHeight};
 }
+
 Karakter::~Karakter() {
     UnloadTexture(objeDokusu);
 }

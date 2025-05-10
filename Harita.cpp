@@ -1,16 +1,5 @@
 #include "Harita.hpp"
-
-std::vector<std::vector<int>> temsiliHarita = {
-            {0,1,1,1,1,1,0,0,0},
-            {0,1,0,0,0,1,1,0,0},
-            {0,1,0,0,0,0,1,0,0},
-            {0,1,1,0,0,0,1,0,0},
-            {0,0,1,1,0,0,1,0,0},
-            {0,0,0,1,1,0,1,0,0},
-            {0,0,0,0,1,1,1,0,0},
-            {0,0,0,0,0,0,0,0,0}
-};
-
+#include "Seviyeler.hpp"
 
 Harita::Harita(){
     harita = temsiliHarita;

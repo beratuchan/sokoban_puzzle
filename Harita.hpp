@@ -3,7 +3,6 @@
 #include "GameObject.hpp"
 #include <vector>
 
-
 class Harita{
 public:
     Harita();
