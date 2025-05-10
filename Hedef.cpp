@@ -1,19 +1,23 @@
-#ifndef KARAKTER_HPP
-#define KARAKTER_HPP
+#include "raylib.h"
+#include "Hedef.hpp"
 
-#include "GameObject.hpp"
-#include "DokuYonetici.hpp"
-
-class Hedef : public GameObject {
-    public:
-        Hedef(Vector2 pozisyon);
-        ~Hedef();
-        void Guncelle() override;
-        void Ciz() override;
-        void AnimasyonuGuncelle();
-
-    private:
-        Texture2D objeDokusu;
-        Vector2 cizimPozisyonu = {0,0};
+Hedef::Hedef(Vector2 cizim_pozisyonu, std::string renk){
+    this->renk = renk;
+    cizimPozisyonu = cizim_pozisyonu;
+    objeDokusu = DokuYonetici::DokuYukle(GorselSec());
 };
-#endif
+
+Hedef::~Hedef(){
+    UnloadTexture(objeDokusu);
+};
+
+void Hedef::Guncelle(){};
+
+void Hedef::Ciz(){
+    DokuYonetici::DokuCiz(objeDokusu,{0,0,64,64},cizimPozisyonu);
+};
+
+std::string Hedef::GorselSec(){
+    if(renk=="yesil") return "resources/yesilhedef.png";
+    else return "resources/mavihedef.png";
+}

@@ -2,7 +2,7 @@
 #include "GirdiKontrolcu.hpp"
 
 Karakter::Karakter(Vector2 cizim_pozisyonu) {
-    this->cizimPozisyonu = cizim_pozisyonu;
+    cizimPozisyonu = cizim_pozisyonu;
     objeDokusu = DokuYonetici::DokuYukle("resources/adam.png");
     frameWidth = objeDokusu.width / 6;
     frameHeight = objeDokusu.height / 2;
@@ -29,13 +29,13 @@ void Karakter::AnimasyonuGuncelle() {
             
         case Yon::SAGA:
             kare.y = frameHeight;
-            currentFrame = currentFrame % 3;
+            currentFrame = currentFrame % 2;
             kare.x = currentFrame * frameWidth;
             break;
             
         case Yon::SOLA:
             kare.y = frameHeight;
-            currentFrame = 3 + (currentFrame % 3);
+            currentFrame = 3 + (currentFrame % 2);
             kare.x = currentFrame * frameWidth;
             break;
             
