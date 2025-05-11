@@ -16,6 +16,10 @@ Vector2 Sandik::getCizimPozisyonu(){
     return cizimPozisyonu;
 }
 
+bool Sandik::getHedefteMi(){
+    return hedefteMi;
+}
+
 void Sandik::Guncelle(){
 
     std::string yeniDokuYolu = GorselSec();
@@ -35,9 +39,11 @@ void Sandik::Ciz(){
 
 std::string Sandik::GorselSec(){
     if(kesisimKontrolcu->HucreHedef(cizimPozisyonu)){
-        if(renk==kesisimKontrolcu->HucredekiSandigiDondur(cizimPozisyonu)->renk){
+        if(renk == kesisimKontrolcu->HucredekiHedefiDondur(cizimPozisyonu)->getRenk()){
+            hedefteMi = true;
             return "resources/" + renk + "sandikyildizli.png";
         }
     }
+    hedefteMi = false;
     return "resources/" + renk + "sandik.png";
 }

@@ -6,9 +6,10 @@
 #include <string>
 #include "DokuYonetici.hpp"
 #include "KesisimKontrolcu.hpp"
+
 class KesisimKontrolcu;
 
-class Sandik:public GameObject{
+class Sandik: public GameObject{
     public:
         Sandik(Vector2 cizim_pozisyonu, std::string renk, KesisimKontrolcu* kesisimKontrolcu);
         ~Sandik();
@@ -17,6 +18,7 @@ class Sandik:public GameObject{
         std::string GorselSec();
         Vector2 getCizimPozisyonu();
         void HareketEttir(Vector2 yeniCizimPozisyonu);
+        bool getHedefteMi();
     private:
         KesisimKontrolcu* kesisimKontrolcu;
         Vector2 cizimPozisyonu;

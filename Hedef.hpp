@@ -12,6 +12,8 @@ class Hedef : public GameObject {
         void Ciz() override;
         std::string GorselSec();
         Vector2 getCizimPozisyonu();
+        std::string getRenk();
+        
     private:
         Texture2D objeDokusu;
         std::string renk;

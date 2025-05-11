@@ -7,6 +7,7 @@
 #include "Sandik.hpp"
 #include "Hedef.hpp"
 #include "Harita.hpp"
+
 class Sandik;
 
 class KesisimKontrolcu{
@@ -18,6 +19,7 @@ class KesisimKontrolcu{
         bool HucreDuvar(Vector2 hucre) const;
         bool HucreBos(Vector2 hucre) const;
         Sandik* HucredekiSandigiDondur(Vector2 hucre) const;
+        Hedef* HucredekiHedefiDondur(Vector2 hucre) const;
 
     private:
         Harita* m_harita;

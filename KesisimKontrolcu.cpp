@@ -58,3 +58,16 @@ Sandik* KesisimKontrolcu::HucredekiSandigiDondur(Vector2 hucre) const {
     }
     return nullptr;
 }
+
+Hedef* KesisimKontrolcu::HucredekiHedefiDondur(Vector2 hucre) const{
+    if (!m_hedefler || m_hedefler->empty()) return nullptr;
+    
+    for (size_t i = 0; i < m_hedefler->size(); i++) {
+        Hedef& hedef = (*m_hedefler)[i];
+        if (hedef.getCizimPozisyonu().x == hucre.x && 
+            hedef.getCizimPozisyonu().y == hucre.y) {
+            return &(*m_hedefler)[i];
+        }
+    }
+    return nullptr;
+};

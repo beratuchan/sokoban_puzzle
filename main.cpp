@@ -5,16 +5,18 @@
 #include "Hedef.hpp"
 #include "Sandik.hpp"
 #include "ObjeYonetici.hpp"
+#include "SeviyeSistemi.hpp"
 
 int main() {
+
     SetTargetFPS(60);
     InitWindow(9*64, 8*64, "2D Oyun Projesi");
-    ObjeYonetici objeYonetici(3);
+    SeviyeSistemi seviyeSistemi;
     while(!WindowShouldClose()){
         GirdiKontrolcu::HareketKontrol();
         BeginDrawing();
         ClearBackground((Color){122, 146, 148, 255});
-        objeYonetici.Dongu();
+        seviyeSistemi.Dongu();
         EndDrawing();
     }
     CloseWindow();
