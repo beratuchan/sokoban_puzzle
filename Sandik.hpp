@@ -14,6 +14,7 @@ class Sandik:public GameObject{
         void Ciz() override;
         std::string GorselSec();
         Vector2 getCizimPozisyonu();
+        void HareketEttir(Vector2 yeniCizimPozisyonu);
     private:
         Vector2 cizimPozisyonu;
         std::string dokuYolu;

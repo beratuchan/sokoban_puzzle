@@ -1,6 +1,5 @@
 #include "Karakter.hpp"
 
-
 Karakter::Karakter(Vector2 cizim_pozisyonu, KesisimKontrolcu* kesisimKontrolcu) {
     cizimPozisyonu = cizim_pozisyonu;
     m_kesisimKontrolcu = kesisimKontrolcu;
@@ -17,14 +16,23 @@ Karakter::~Karakter() {
 void Karakter::Guncelle() {
     GirdiKontrolcu::HareketKontrol();
     if(GirdiKontrolcu::mevcutYon != Yon::HAREKETSIZ) {
+
         const Vector2 ileriHucre = IleriHucrePozisyonu(GirdiKontrolcu::mevcutYon, cizimPozisyonu);
         bool ilerisiBos = m_kesisimKontrolcu->HucreBos(ileriHucre);
-        if(ilerisiBos){
-            cizimPozisyonu = {ileriHucre.x, ileriHucre.y};
+        const Vector2 ikiIleriHucre = IleriHucrePozisyonu(GirdiKontrolcu::mevcutYon, ileriHucre);
+        bool ikiIlerisiBos = m_kesisimKontrolcu->HucreBos(ikiIleriHucre);
+        bool ilerisiSandik = m_kesisimKontrolcu->HucreSandik(ileriHucre);
+
+        if(ilerisiBos || (ilerisiSandik && ikiIlerisiBos)){
+            if(ilerisiSandik){
+                Sandik *sandik = m_kesisimKontrolcu->HucredekiSandigiDondur(ileriHucre);
+                sandik->HareketEttir(ikiIleriHucre);
+            }
+            cizimPozisyonu=ileriHucre;
         }
+        
         AnimasyonuGuncelle();
     }
-        
 }
 
 Vector2 Karakter::IleriHucrePozisyonu(Yon yon, const Vector2& baslangicPoz){

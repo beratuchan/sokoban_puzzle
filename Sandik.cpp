@@ -19,6 +19,10 @@ void Sandik::Guncelle(){
 
 };
 
+void Sandik::HareketEttir(Vector2 yeniCizimPozisyonu){
+    cizimPozisyonu = yeniCizimPozisyonu;
+}
+
 void Sandik::Ciz(){
     DokuYonetici::DokuCiz(objeDokusu,{0,0,64,64},cizimPozisyonu);
 };
