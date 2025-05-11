@@ -7,6 +7,7 @@
 #include "Sandik.hpp"
 #include "Hedef.hpp"
 #include "Harita.hpp"
+class Sandik;
 
 class KesisimKontrolcu{
     public:
@@ -18,10 +19,10 @@ class KesisimKontrolcu{
         bool HucreBos(Vector2 hucre) const;
         Sandik* HucredekiSandigiDondur(Vector2 hucre) const;
 
-        
     private:
         Harita* m_harita;
         std::vector<Sandik>* m_sandiklar;
         std::vector<Hedef>* m_hedefler;
+
 };
 #endif 

@@ -5,10 +5,12 @@
 #include "GameObject.hpp"
 #include <string>
 #include "DokuYonetici.hpp"
+#include "KesisimKontrolcu.hpp"
+class KesisimKontrolcu;
 
 class Sandik:public GameObject{
     public:
-        Sandik(Vector2 cizim_pozisyonu, std::string renk);
+        Sandik(Vector2 cizim_pozisyonu, std::string renk, KesisimKontrolcu* kesisimKontrolcu);
         ~Sandik();
         void Guncelle() override;
         void Ciz() override;
@@ -16,9 +18,11 @@ class Sandik:public GameObject{
         Vector2 getCizimPozisyonu();
         void HareketEttir(Vector2 yeniCizimPozisyonu);
     private:
+        KesisimKontrolcu* kesisimKontrolcu;
         Vector2 cizimPozisyonu;
         std::string dokuYolu;
         Texture2D objeDokusu;
         std::string renk;
+        bool hedefteMi;
 };
 #endif

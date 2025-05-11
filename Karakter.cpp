@@ -30,7 +30,6 @@ void Karakter::Guncelle() {
             }
             cizimPozisyonu=ileriHucre;
         }
-        
         AnimasyonuGuncelle();
     }
 }

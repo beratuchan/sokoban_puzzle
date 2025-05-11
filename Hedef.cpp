@@ -16,7 +16,9 @@ Vector2 Hedef::getCizimPozisyonu(){
     return cizimPozisyonu;
 }
 
-void Hedef::Guncelle(){};
+void Hedef::Guncelle(){
+    
+};
 
 void Hedef::Ciz(){
     DokuYonetici::DokuCiz(objeDokusu,{0,0,64,64},cizimPozisyonu);
