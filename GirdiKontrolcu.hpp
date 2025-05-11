@@ -1,3 +1,6 @@
+#ifndef GIRDI_KONTROLCU_HPP
+#define GIRDI_KONTROLCU_HPP
+
 #include "YonEnum.hpp"
 
 class GirdiKontrolcu{
@@ -6,3 +9,5 @@ class GirdiKontrolcu{
         static Yon mevcutYon;
         static int hareketSayaci;
 };
+
+#endif

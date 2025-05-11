@@ -4,12 +4,17 @@
 Hedef::Hedef(Vector2 cizim_pozisyonu, std::string renk){
     this->renk = renk;
     this->cizimPozisyonu = cizim_pozisyonu;
-    this->objeDokusu = DokuYonetici::DokuYukle(GorselSec());
+    std::string dokuyolu = GorselSec();
+    this->objeDokusu = DokuYonetici::DokuYukle(dokuyolu);
 };
 
 Hedef::~Hedef(){
-    UnloadTexture(objeDokusu);
+
 };
+
+Vector2 Hedef::getCizimPozisyonu(){
+    return cizimPozisyonu;
+}
 
 void Hedef::Guncelle(){};
 

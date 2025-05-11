@@ -4,6 +4,6 @@ enum class Yon {
     HAREKETSIZ,
     SAGA,
     SOLA,
-    ILERI,
-    GERI
+    YUKARI,
+    ASAGI
 };

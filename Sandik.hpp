@@ -13,9 +13,11 @@ class Sandik:public GameObject{
         void Guncelle() override;
         void Ciz() override;
         std::string GorselSec();
+        Vector2 getCizimPozisyonu();
     private:
+        Vector2 cizimPozisyonu;
+        std::string dokuYolu;
         Texture2D objeDokusu;
-        Vector2 cizimPozisyonu = {0,0};
         std::string renk;
 };
 #endif

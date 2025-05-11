@@ -1,30 +1,44 @@
-#include "raylib.h"
+#ifndef OBJEYONETICI_HPP
+#define OBJEYONETICI_HPP
+
 #include <vector>
+#include "GameObject.hpp"
+#include "raylib.h"
 #include "Karakter.hpp"
 #include "Sandik.hpp"
 #include "Harita.hpp"
 #include "Hedef.hpp"
 #include "Seviyeler.hpp"
-
-using namespace std;
+#include "KesisimKontrolcu.hpp"
 
 class ObjeYonetici{
     public:
         ObjeYonetici(int seviyeNo); 
         ~ObjeYonetici();
-        void Guncelle();
         void Dongu();
+
+        std::vector<Sandik>& getSandiklar();
+        std::vector<Hedef>& getHedefler();
+        Karakter* getKarakter();
+        Harita* getHarita();
+        KesisimKontrolcu* getKesisimKontolcu();
 
     private:
         void SandiklariDoldur();
         void HedefleriDoldur();
         void ObjeleriDoldur();
+
         Karakter* karakter;
+        KesisimKontrolcu* kesisimKontrolcu;
         Harita* harita;
-        vector<Sandik> sandiklar;
-        vector<Hedef> hedefler;
-        vector<GameObject*> objeler;
-        vector<SandikStruct> sandikStructlar;
-        vector<HedefStruct> hedefStructlar;
+
+        std::vector<Sandik> sandiklar;
+        std::vector<Hedef> hedefler;
+        std::vector<GameObject*> objeler;
+
+        std::vector<SandikStruct> sandikStructlar;
+        std::vector<HedefStruct> hedefStructlar;
 
 };
+
+#endif

@@ -1,40 +1,70 @@
 #include "ObjeYonetici.hpp"
 
 ObjeYonetici::ObjeYonetici(int seviyeNo){
-    karakter = new Karakter(SEVIYELER[seviyeNo].karakter);
     harita = new Harita(SEVIYELER[seviyeNo].harita);
+
     sandikStructlar = SEVIYELER[seviyeNo].sandiklar;
     hedefStructlar = SEVIYELER[seviyeNo].hedefler;
+
     SandiklariDoldur();
     HedefleriDoldur();
+
+    kesisimKontrolcu = new KesisimKontrolcu(harita, &sandiklar, &hedefler);
+    karakter = new Karakter(SEVIYELER[seviyeNo].karakter, kesisimKontrolcu);
+
     ObjeleriDoldur();
 }
 
 ObjeYonetici::~ObjeYonetici() {
     delete karakter;
     delete harita;
+    delete kesisimKontrolcu;
+
+}
+
+std::vector<Sandik>& ObjeYonetici::getSandiklar(){
+    return sandiklar;
+}
+
+std::vector<Hedef>& ObjeYonetici::getHedefler(){
+    return hedefler;
+}
+
+Karakter* ObjeYonetici::getKarakter(){
+    return karakter;
+}
+
+Harita* ObjeYonetici::getHarita(){
+    return harita;
+}
+
+KesisimKontrolcu* ObjeYonetici::getKesisimKontolcu() {
+    return kesisimKontrolcu;
 }
 
 void ObjeYonetici::SandiklariDoldur(){
     for(SandikStruct sandikStruct : sandikStructlar){
-        sandiklar.emplace_back(sandikStruct.pozisyon,sandikStruct.renk);
+        sandiklar.emplace_back(sandikStruct.pozisyon, sandikStruct.renk);
     }
 }
 
 void ObjeYonetici::HedefleriDoldur(){
     for(HedefStruct hedefStruct : hedefStructlar){
-        hedefler.emplace_back(hedefStruct.pozisyon,hedefStruct.renk);
+        hedefler.emplace_back(hedefStruct.pozisyon, hedefStruct.renk);
     }
 }
 
 void ObjeYonetici::ObjeleriDoldur(){
     objeler.push_back(harita);
-    for(auto& sandik : sandiklar){
-        objeler.push_back(&sandik);
+    
+    for(size_t i = 0; i < sandiklar.size(); i++){
+        objeler.push_back(&sandiklar[i]);
     }
-    for(auto& hedef : hedefler){
-        objeler.push_back(&hedef);
+    
+    for(size_t i = 0; i < hedefler.size(); i++){
+        objeler.push_back(&hedefler[i]);
     }
+    
     objeler.push_back(karakter);
 }
 
@@ -44,5 +74,3 @@ void ObjeYonetici::Dongu(){
         obje->Ciz();      
     }
 }
-
-

@@ -3,12 +3,17 @@
 Sandik::Sandik(Vector2 cizim_pozisyonu, std::string renk){
     this->renk = renk;
     this->cizimPozisyonu = cizim_pozisyonu;
-    this->objeDokusu = DokuYonetici::DokuYukle(GorselSec());
+    this->dokuYolu = GorselSec();
+    this->objeDokusu = DokuYonetici::DokuYukle(dokuYolu);
 };
 
 Sandik::~Sandik(){
-    UnloadTexture(objeDokusu);
+
 };
+
+Vector2 Sandik::getCizimPozisyonu(){
+    return cizimPozisyonu;
+}
 
 void Sandik::Guncelle(){
 

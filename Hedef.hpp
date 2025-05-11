@@ -11,9 +11,10 @@ class Hedef : public GameObject {
         void Guncelle() override;
         void Ciz() override;
         std::string GorselSec();
+        Vector2 getCizimPozisyonu();
     private:
         Texture2D objeDokusu;
-        Vector2 cizimPozisyonu = {0,0};
         std::string renk;
+        Vector2 cizimPozisyonu;
 };
 #endif
