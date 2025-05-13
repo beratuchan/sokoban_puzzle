@@ -1,42 +1,82 @@
 #include "Karakter.hpp"
+#include "cmath"
 
 Karakter::Karakter(Vector2 cizim_pozisyonu, KesisimKontrolcu* kesisimKontrolcu, DurumYonetici* durumYonetici) {
     this->cizimPozisyonu = cizim_pozisyonu;
     this->kesisimKontrolcu = kesisimKontrolcu;
     this->durumYonetici = durumYonetici;
     objeDokusu = DokuYonetici::DokuYukle("resources/adam.png");
-    frameWidth = objeDokusu.width / 6;
-    frameHeight = objeDokusu.height / 2;
-    kare = {0, 0, (float)frameWidth, (float)frameHeight};
+    frameGenisligi = objeDokusu.width / 6;
+    frameYuksekligi = objeDokusu.height / 2;
+    kare = {0, 0, (float)frameGenisligi, (float)frameYuksekligi};
 }
 
 Karakter::~Karakter() {
     UnloadTexture(objeDokusu);
 }
 
+void Karakter::HareketTetikle(Vector2 gidilecekPozisyon){
+    this->gidilecekPozisyon = gidilecekPozisyon;
+    hareketEdiyor = true;
+}
+
+void Karakter::HareketEttir(){
+
+    Vector2 yonVektoru = {0};
+        switch(mevcutYon) {
+        case Yon::YUKARI: yonVektoru.y = -1; break;
+        case Yon::ASAGI: yonVektoru.y = 1; break;
+        case Yon::SOLA: yonVektoru.x = -1; break;
+        case Yon::SAGA: yonVektoru.x = 1; break;
+        default: break;
+    }
+
+    float adim = 4;
+    while (hareketEdiyor) {
+    
+        float kalanXYolu = gidilecekPozisyon.x - cizimPozisyonu.x;
+        float kalanYYolu = gidilecekPozisyon.y - cizimPozisyonu.y;
+
+        if (fabs(kalanXYolu) <= adim && fabs(kalanYYolu) <= adim) {
+            cizimPozisyonu = gidilecekPozisyon;
+            hareketEdiyor = false;
+            break;
+        }
+        
+        cizimPozisyonu.x += yonVektoru.x * adim;
+        cizimPozisyonu.y += yonVektoru.y * adim;
+        break;
+    }
+}
+
 void Karakter::Guncelle() {
-    if(GirdiKontrolcu::mevcutYon != Yon::HAREKETSIZ) {
+    
+    if(hareketEdiyor){
+        HareketEttir();
+        AnimasyonuGuncelle();
+        return;
+    }
 
-        oncekiPozisyon = cizimPozisyonu;
-
-        const Vector2 ileriHucre = IleriHucrePozisyonu(GirdiKontrolcu::mevcutYon, cizimPozisyonu);
+    mevcutYon = GirdiKontrolcu::mevcutYon;
+    if(mevcutYon != Yon::HAREKETSIZ) {
+        const Vector2 ileriHucre = IleriHucrePozisyonu(mevcutYon, cizimPozisyonu);
         bool ilerisiBos = kesisimKontrolcu->HucreBos(ileriHucre);
-        const Vector2 ikiIleriHucre = IleriHucrePozisyonu(GirdiKontrolcu::mevcutYon, ileriHucre);
+        const Vector2 ikiIleriHucre = IleriHucrePozisyonu(mevcutYon, ileriHucre);
         bool ikiIlerisiBos = kesisimKontrolcu->HucreBos(ikiIleriHucre);
         bool ilerisiSandik = kesisimKontrolcu->HucreSandik(ileriHucre);
 
         if(ilerisiBos || (ilerisiSandik && ikiIlerisiBos)){
             if(ilerisiSandik){
                 Sandik *sandik = kesisimKontrolcu->HucredekiSandigiDondur(ileriHucre);
-                sandik->HareketEttir(ikiIleriHucre);
+                sandik->HareketTetikle(ikiIleriHucre,mevcutYon);
             }
-            cizimPozisyonu=ileriHucre;
+            HareketTetikle(ileriHucre);
+            DurumKaydet();
+            GirdiKontrolcu::hareketSayaci++;
         }
-        AnimasyonuGuncelle();
-        GirdiKontrolcu::hareketSayaci++;
-        DurumKaydet();
     }
 }
+
 
 void Karakter::PozisyonAta(Vector2 yeniPozisyon){
     cizimPozisyonu = yeniPozisyon;
@@ -71,36 +111,35 @@ void Karakter::DurumKaydet(){
 };
 
 void Karakter::AnimasyonuGuncelle() {
-    framesCounter++;
-    currentFrame = framesCounter;
-    switch(GirdiKontrolcu::mevcutYon) {
+    mevcutFrame+=1;
+
+    switch(mevcutYon) {
         case Yon::ASAGI:
             kare.y = 0;
-            currentFrame = currentFrame % 3;
-            kare.x = currentFrame * frameWidth;
+            if(mevcutFrame >= 3) mevcutFrame = 0;
+            kare.x = mevcutFrame * frameGenisligi;
             break;
             
         case Yon::YUKARI:
             kare.y = 0;
-            currentFrame = 3 + (currentFrame % 3);
-            kare.x = currentFrame * frameWidth;
+            if(mevcutFrame >= 3) mevcutFrame = 0;
+            kare.x = (mevcutFrame + 3) * frameGenisligi;
             break;
             
         case Yon::SAGA:
-            kare.y = frameHeight;
-            currentFrame = currentFrame % 2;
-            kare.x = currentFrame * frameWidth;
+            kare.y = frameYuksekligi;
+            if(mevcutFrame >= 2) mevcutFrame = 0;
+            kare.x = mevcutFrame * frameGenisligi;
             break;
             
         case Yon::SOLA:
-            kare.y = frameHeight;
-            currentFrame = 3 + (currentFrame % 2);
-            kare.x = currentFrame * frameWidth;
+            kare.y = frameYuksekligi;
+            if(mevcutFrame >= 2) mevcutFrame = 0;
+            kare.x = (mevcutFrame + 3) * frameGenisligi;
             break;
             
         case Yon::HAREKETSIZ:
-            currentFrame = 0;
-            framesCounter = 0;
+            mevcutFrame = 0; 
             break;
     }
 }

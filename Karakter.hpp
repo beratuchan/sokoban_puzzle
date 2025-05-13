@@ -19,18 +19,24 @@ class Karakter : public GameObject {
         void DurumKaydet();
         void PozisyonAta(Vector2 yeniPozisyon);
         Vector2 getCizimPozisyonu() {return cizimPozisyonu;};
+        void HareketEttir();
+        void HareketTetikle(Vector2 gidilecekPozisyon);
 
     private:
         Texture2D objeDokusu;
         Vector2 cizimPozisyonu;
+        Vector2 gidilecekPozisyon;
         Vector2 oncekiPozisyon;
         Rectangle kare;
         KesisimKontrolcu* kesisimKontrolcu;
         DurumYonetici* durumYonetici;
+        Yon mevcutYon;
 
-        int currentFrame = 0;
-        int framesCounter = 0;
-        int frameWidth;
-        int frameHeight;
+        bool hareketEdiyor = false;
+        float mevcutFrame = 0;
+        int frameGenisligi;
+        int frameYuksekligi;
+        
+
 };
 #endif

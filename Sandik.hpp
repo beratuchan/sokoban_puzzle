@@ -6,6 +6,7 @@
 #include <string>
 #include "DokuYonetici.hpp"
 #include "KesisimKontrolcu.hpp"
+#include "YonEnum.hpp"
 
 class KesisimKontrolcu;
 
@@ -17,7 +18,8 @@ class Sandik: public GameObject{
         void Ciz() override;
         std::string GorselSec();
         Vector2 getCizimPozisyonu();
-        void HareketEttir(Vector2 yeniCizimPozisyonu);
+        void HareketTetikle(Vector2 yeniCizimPozisyonu, Yon mevcutYon);
+        void HareketEttir();
         bool getHedefteMi();
         Vector2 getPozisyon() const {return cizimPozisyonu;};
 
@@ -28,5 +30,10 @@ class Sandik: public GameObject{
         Texture2D objeDokusu;
         std::string renk;
         bool hedefteMi;
+        Yon mevcutYon;
+
+        Vector2 gidilecekPozisyon;    
+        bool hareketEdiyor = false;       
+        float hareketHizi = 120;  
 };
 #endif
