@@ -18,6 +18,7 @@ class Sandik: public GameObject{
         void Ciz() override;
         std::string GorselSec();
         Vector2 getCizimPozisyonu();
+        void PozisyonAta(Vector2 yeniPozisyon);
         void HareketTetikle(Vector2 yeniCizimPozisyonu, Yon mevcutYon);
         void HareketEttir();
         bool getHedefteMi();

@@ -13,6 +13,11 @@ Sandik::~Sandik(){
 
 };
 
+void Sandik::PozisyonAta(Vector2 yeniPozisyon){
+    cizimPozisyonu = yeniPozisyon;
+    hareketEdiyor = false;
+}
+
 Vector2 Sandik::getCizimPozisyonu(){
     return cizimPozisyonu;
 }
