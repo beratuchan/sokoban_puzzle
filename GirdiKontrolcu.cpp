@@ -30,6 +30,6 @@ void GirdiKontrolcu::GeriAl(ObjeYonetici* objeYonetici){
             sandiklar[i].PozisyonAta(oncekiDurum.sandikPozisyonlar[i]);
         }
     }
-    
+
     hareketSayaci = oncekiDurum.hareketSayaci;
 }

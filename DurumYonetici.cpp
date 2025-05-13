@@ -15,8 +15,9 @@ void DurumYonetici::Kaydet(const Durum& durum) {
 
 Durum DurumYonetici::GeriAl() {
     if (GeriAlinabilir()) {
+        Durum dondurulecek = durumlar[mevcutIndex];
         mevcutIndex--;
-        return durumlar[mevcutIndex];
+        return dondurulecek;
     }
     return Durum{}; 
 }
