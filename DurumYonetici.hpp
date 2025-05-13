@@ -13,11 +13,13 @@ struct Durum {
 class DurumYonetici {
 public:
     void Kaydet(const Durum& durum);
+    bool GeriAlinabilir();
     Durum GeriAl();
     bool BosMu() const;
     void Temizle();
 
 private:
-    std::stack<Durum> durumlar;
+    std::vector<Durum> durumlar;
+    int mevcutIndex = -1;
     static constexpr size_t MAX_DURUM = 100;
 };

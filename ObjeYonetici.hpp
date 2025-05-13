@@ -27,6 +27,8 @@ class ObjeYonetici{
         KesisimKontrolcu* getKesisimKontolcu(){return kesisimKontrolcu;};
         DurumYonetici* getDurumYonetici(){return durumYonetici;};
         ObjeYonetici* getObjeYonetici() { return objeYonetici; }
+        void BaslangicDurumunuKaydet();
+
     private:
         void SandiklariDoldur();
         void HedefleriDoldur();

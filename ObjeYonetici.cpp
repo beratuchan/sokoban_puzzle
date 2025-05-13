@@ -14,6 +14,17 @@ ObjeYonetici::ObjeYonetici(int seviyeNo){
     karakter = new Karakter(SEVIYELER[seviyeNo].karakter, kesisimKontrolcu, durumYonetici);
 
     ObjeleriDoldur();
+    BaslangicDurumunuKaydet();
+}
+
+void ObjeYonetici::BaslangicDurumunuKaydet(){
+    Durum baslangicDurumu;
+    baslangicDurumu.karakterPozisyon = karakter->getCizimPozisyonu();
+    for (const auto& sandik : sandiklar) {
+        baslangicDurumu.sandikPozisyonlar.push_back(sandik.getPozisyon());
+    }
+    baslangicDurumu.hareketSayaci = 0;
+    durumYonetici->Kaydet(baslangicDurumu); 
 }
 
 ObjeYonetici::~ObjeYonetici() {

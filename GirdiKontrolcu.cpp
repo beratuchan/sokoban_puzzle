@@ -18,14 +18,18 @@ void GirdiKontrolcu::GeriAl(ObjeYonetici* objeYonetici){
     if (!objeYonetici) return;
     
     DurumYonetici* durumYonetici = objeYonetici->getDurumYonetici();
-    if (!durumYonetici || durumYonetici->BosMu()) return;
+    if (!durumYonetici || !durumYonetici->GeriAlinabilir()) return;
 
-    Durum oncekiDurum = durumYonetici->GeriAl();
+    Durum oncekiDurum = durumYonetici->GeriAl(); 
+
     objeYonetici->getKarakter()->PozisyonAta(oncekiDurum.karakterPozisyon);
     
     auto& sandiklar = objeYonetici->getKesisimKontolcu()->getSandiklar();
-    for (size_t i = 0; i < sandiklar.size(); ++i)
-        sandiklar[i].HareketEttir(oncekiDurum.sandikPozisyonlar[i]);
+    if (oncekiDurum.sandikPozisyonlar.size() == sandiklar.size()) {
+        for (size_t i = 0; i < sandiklar.size(); ++i) {
+            sandiklar[i].HareketEttir(oncekiDurum.sandikPozisyonlar[i]);
+        }
+    }
     
     hareketSayaci = oncekiDurum.hareketSayaci;
 }

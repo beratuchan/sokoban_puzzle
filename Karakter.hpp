@@ -18,6 +18,7 @@ class Karakter : public GameObject {
         Vector2 IleriHucrePozisyonu(Yon yon, const Vector2& baslangicPoz);
         void DurumKaydet();
         void PozisyonAta(Vector2 yeniPozisyon);
+        Vector2 getCizimPozisyonu() {return cizimPozisyonu;};
 
     private:
         Texture2D objeDokusu;

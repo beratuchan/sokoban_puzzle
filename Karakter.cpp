@@ -15,7 +15,6 @@ Karakter::~Karakter() {
 }
 
 void Karakter::Guncelle() {
-    GirdiKontrolcu::HareketKontrol(nullptr);
     if(GirdiKontrolcu::mevcutYon != Yon::HAREKETSIZ) {
 
         oncekiPozisyon = cizimPozisyonu;
