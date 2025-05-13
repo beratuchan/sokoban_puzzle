@@ -1,9 +1,10 @@
 #include "raylib.h"
 #include "Hedef.hpp"
 
-Hedef::Hedef(Vector2 cizim_pozisyonu, std::string renk){
+Hedef::Hedef(Vector2 cizim_pozisyonu, std::string renk, KesisimKontrolcu* kesisimKontrolcu){
     this->renk = renk;
     this->cizimPozisyonu = cizim_pozisyonu;
+    this->kesisimKontrolcu = kesisimKontrolcu;
     std::string dokuyolu = GorselSec();
     this->objeDokusu = DokuYonetici::DokuYukle(dokuyolu);
 };
@@ -11,6 +12,12 @@ Hedef::Hedef(Vector2 cizim_pozisyonu, std::string renk){
 Hedef::~Hedef(){
 
 };
+
+bool Hedef::DoluMu(){
+    if(kesisimKontrolcu->HucreSandik(cizimPozisyonu))
+        return kesisimKontrolcu->HucredekiSandigiDondur(cizimPozisyonu)->getHedefteMi();
+    else return false;
+}
 
 Vector2 Hedef::getCizimPozisyonu(){
     return cizimPozisyonu;
@@ -29,6 +36,5 @@ void Hedef::Ciz(){
 };
 
 std::string Hedef::GorselSec(){
-    if(renk=="yesil") return "resources/yesilhedef.png";
-    else return "resources/mavihedef.png";
+    return "resources/"+renk+"hedef.png";
 }

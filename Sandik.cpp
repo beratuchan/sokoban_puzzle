@@ -10,7 +10,7 @@ Sandik::Sandik(Vector2 cizim_pozisyonu, std::string renk, KesisimKontrolcu* kesi
 };
 
 Sandik::~Sandik(){
-
+    
 };
 
 void Sandik::PozisyonAta(Vector2 yeniPozisyon){

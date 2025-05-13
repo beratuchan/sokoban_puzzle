@@ -9,6 +9,7 @@
 #include "Harita.hpp"
 
 class Sandik;
+class Hedef;
 
 class KesisimKontrolcu{
     public:

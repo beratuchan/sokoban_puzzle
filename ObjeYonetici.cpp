@@ -58,7 +58,7 @@ void ObjeYonetici::SandiklariDoldur(){
 
 void ObjeYonetici::HedefleriDoldur(){
     for(HedefStruct hedefStruct : hedefStructlar){
-        hedefler.emplace_back(hedefStruct.pozisyon, hedefStruct.renk);
+        hedefler.emplace_back(hedefStruct.pozisyon, hedefStruct.renk, kesisimKontrolcu);
     }
 }
 

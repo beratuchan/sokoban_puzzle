@@ -15,9 +15,9 @@ void SeviyeSistemi::Baslat() {
 
 bool SeviyeSistemi::SeviyeTamamlandiMi() const {
     if(!objeYonetici) return false;
-    std::vector<Sandik> sandiklar = objeYonetici->getSandiklar();
-    for(Sandik sandik: sandiklar){
-        if(!sandik.getHedefteMi()){
+    std::vector<Hedef> hedefler = objeYonetici->getHedefler();
+    for(Hedef hedef: hedefler){
+        if(!hedef.DoluMu()){
             return false;
         }
     }

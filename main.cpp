@@ -10,7 +10,7 @@
 int main() {
 
     SetTargetFPS(60);
-    InitWindow(9*64, 8*64, "2D Oyun Projesi");
+    InitWindow(9*64, 11*64, "2D Oyun Projesi");
     SeviyeSistemi seviyeSistemi;
 
     while(!WindowShouldClose()){
