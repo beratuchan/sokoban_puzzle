@@ -111,31 +111,31 @@ void Karakter::DurumKaydet(){
 };
 
 void Karakter::AnimasyonuGuncelle() {
-    mevcutFrame+=1;
+    mevcutFrame+=0.2;
 
     switch(mevcutYon) {
         case Yon::ASAGI:
             kare.y = 0;
             if(mevcutFrame >= 3) mevcutFrame = 0;
-            kare.x = mevcutFrame * frameGenisligi;
+            kare.x = floorf(mevcutFrame) * frameGenisligi;
             break;
             
         case Yon::YUKARI:
             kare.y = 0;
             if(mevcutFrame >= 3) mevcutFrame = 0;
-            kare.x = (mevcutFrame + 3) * frameGenisligi;
+            kare.x = (floorf(mevcutFrame)+3) * frameGenisligi;
             break;
             
         case Yon::SAGA:
             kare.y = frameYuksekligi;
             if(mevcutFrame >= 2) mevcutFrame = 0;
-            kare.x = mevcutFrame * frameGenisligi;
+            kare.x = floorf(mevcutFrame) * frameGenisligi;
             break;
             
         case Yon::SOLA:
             kare.y = frameYuksekligi;
             if(mevcutFrame >= 2) mevcutFrame = 0;
-            kare.x = (mevcutFrame + 3) * frameGenisligi;
+            kare.x = (floorf(mevcutFrame) + 3) * frameGenisligi;
             break;
             
         case Yon::HAREKETSIZ:
