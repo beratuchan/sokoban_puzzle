@@ -1,8 +1,9 @@
 #include "Karakter.hpp"
 
-Karakter::Karakter(Vector2 cizim_pozisyonu, KesisimKontrolcu* kesisimKontrolcu) {
-    cizimPozisyonu = cizim_pozisyonu;
-    m_kesisimKontrolcu = kesisimKontrolcu;
+Karakter::Karakter(Vector2 cizim_pozisyonu, KesisimKontrolcu* kesisimKontrolcu, DurumYonetici* durumYonetici) {
+    this->cizimPozisyonu = cizim_pozisyonu;
+    this->kesisimKontrolcu = kesisimKontrolcu;
+    this->durumYonetici = durumYonetici;
     objeDokusu = DokuYonetici::DokuYukle("resources/adam.png");
     frameWidth = objeDokusu.width / 6;
     frameHeight = objeDokusu.height / 2;
@@ -14,24 +15,32 @@ Karakter::~Karakter() {
 }
 
 void Karakter::Guncelle() {
-    GirdiKontrolcu::HareketKontrol();
+    GirdiKontrolcu::HareketKontrol(nullptr);
     if(GirdiKontrolcu::mevcutYon != Yon::HAREKETSIZ) {
 
+        oncekiPozisyon = cizimPozisyonu;
+
         const Vector2 ileriHucre = IleriHucrePozisyonu(GirdiKontrolcu::mevcutYon, cizimPozisyonu);
-        bool ilerisiBos = m_kesisimKontrolcu->HucreBos(ileriHucre);
+        bool ilerisiBos = kesisimKontrolcu->HucreBos(ileriHucre);
         const Vector2 ikiIleriHucre = IleriHucrePozisyonu(GirdiKontrolcu::mevcutYon, ileriHucre);
-        bool ikiIlerisiBos = m_kesisimKontrolcu->HucreBos(ikiIleriHucre);
-        bool ilerisiSandik = m_kesisimKontrolcu->HucreSandik(ileriHucre);
+        bool ikiIlerisiBos = kesisimKontrolcu->HucreBos(ikiIleriHucre);
+        bool ilerisiSandik = kesisimKontrolcu->HucreSandik(ileriHucre);
 
         if(ilerisiBos || (ilerisiSandik && ikiIlerisiBos)){
             if(ilerisiSandik){
-                Sandik *sandik = m_kesisimKontrolcu->HucredekiSandigiDondur(ileriHucre);
+                Sandik *sandik = kesisimKontrolcu->HucredekiSandigiDondur(ileriHucre);
                 sandik->HareketEttir(ikiIleriHucre);
             }
             cizimPozisyonu=ileriHucre;
         }
         AnimasyonuGuncelle();
+        GirdiKontrolcu::hareketSayaci++;
+        DurumKaydet();
     }
+}
+
+void Karakter::PozisyonAta(Vector2 yeniPozisyon){
+    cizimPozisyonu = yeniPozisyon;
 }
 
 Vector2 Karakter::IleriHucrePozisyonu(Yon yon, const Vector2& baslangicPoz){
@@ -49,6 +58,18 @@ Vector2 Karakter::IleriHucrePozisyonu(Yon yon, const Vector2& baslangicPoz){
 void Karakter::Ciz() {
     DokuYonetici::DokuCiz(objeDokusu, kare, cizimPozisyonu);
 }
+
+void Karakter::DurumKaydet(){
+    if(cizimPozisyonu.x != oncekiPozisyon.x || cizimPozisyonu.y != oncekiPozisyon.y) {
+        Durum durum;
+        durum.karakterPozisyon = cizimPozisyonu;
+        for(const auto& sandik : kesisimKontrolcu->getSandiklar()) {
+            durum.sandikPozisyonlar.push_back(sandik.getPozisyon());
+        }
+        durum.hareketSayaci = GirdiKontrolcu::hareketSayaci;
+        durumYonetici->Kaydet(durum);
+    }
+};
 
 void Karakter::AnimasyonuGuncelle() {
     framesCounter++;

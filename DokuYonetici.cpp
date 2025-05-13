@@ -1,6 +1,6 @@
 #include "DokuYonetici.hpp"
 
-Texture2D DokuYonetici::DokuYukle(std::string dosyaAdi) {
+Texture2D DokuYonetici::DokuYukle(const std::string& dosyaAdi) {
     return LoadTexture(dosyaAdi.c_str());
 }
 

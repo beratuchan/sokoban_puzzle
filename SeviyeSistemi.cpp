@@ -1,5 +1,5 @@
 #include "SeviyeSistemi.hpp"
-
+#include "iostream"
 SeviyeSistemi::SeviyeSistemi() : mevcutSeviye(0), objeYonetici(nullptr) {
     Baslat();
 }
@@ -25,6 +25,8 @@ bool SeviyeSistemi::SeviyeTamamlandiMi() const {
 }
 
 void SeviyeSistemi::SonrakiSeviye() {
+
+    
     if(mevcutSeviye + 1 < (int)SEVIYELER.size()) {
         mevcutSeviye++;
         Baslat();

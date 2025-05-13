@@ -13,6 +13,7 @@ class SeviyeSistemi {
         void SonrakiSeviye();
         void Dongu();
         bool TumSeviyelerBittiMi() const;
+        ObjeYonetici* getObjeYonetici() { return objeYonetici; }
 
     private:
         int mevcutSeviye;

@@ -10,6 +10,9 @@
 #include "Hedef.hpp"
 #include "Seviyeler.hpp"
 #include "KesisimKontrolcu.hpp"
+#include "DurumYonetici.hpp"
+
+class Karakter;
 
 class ObjeYonetici{
     public:
@@ -21,8 +24,9 @@ class ObjeYonetici{
         std::vector<Hedef>& getHedefler();
         Karakter* getKarakter();
         Harita* getHarita();
-        KesisimKontrolcu* getKesisimKontolcu();
-
+        KesisimKontrolcu* getKesisimKontolcu(){return kesisimKontrolcu;};
+        DurumYonetici* getDurumYonetici(){return durumYonetici;};
+        ObjeYonetici* getObjeYonetici() { return objeYonetici; }
     private:
         void SandiklariDoldur();
         void HedefleriDoldur();
@@ -31,6 +35,8 @@ class ObjeYonetici{
         Karakter* karakter;
         KesisimKontrolcu* kesisimKontrolcu;
         Harita* harita;
+        DurumYonetici* durumYonetici;
+        ObjeYonetici* objeYonetici;
 
         std::vector<Sandik> sandiklar;
         std::vector<Hedef> hedefler;

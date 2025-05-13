@@ -20,6 +20,8 @@ class KesisimKontrolcu{
         bool HucreBos(Vector2 hucre) const;
         Sandik* HucredekiSandigiDondur(Vector2 hucre) const;
         Hedef* HucredekiHedefiDondur(Vector2 hucre) const;
+        std::vector<Sandik>& getSandiklar(){return *m_sandiklar;};
+        const std::vector<Sandik>& getSandiklar() const {return *m_sandiklar;};
 
     private:
         Harita* m_harita;

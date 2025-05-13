@@ -7,7 +7,7 @@
 
 class DokuYonetici{
     public:
-        static Texture2D DokuYukle(std::string dosyaAdi);
+        static Texture2D DokuYukle(const std::string& dosyaAdi);
         static void DokuCiz(Texture2D doku, Rectangle kare, Vector2 pozisyon );
 };
 #endif 

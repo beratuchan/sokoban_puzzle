@@ -7,10 +7,11 @@ ObjeYonetici::ObjeYonetici(int seviyeNo){
     hedefStructlar = SEVIYELER[seviyeNo].hedefler;
 
     kesisimKontrolcu = new KesisimKontrolcu(harita, &sandiklar, &hedefler);
+    durumYonetici = new DurumYonetici();
 
     SandiklariDoldur();
     HedefleriDoldur();
-    karakter = new Karakter(SEVIYELER[seviyeNo].karakter, kesisimKontrolcu);
+    karakter = new Karakter(SEVIYELER[seviyeNo].karakter, kesisimKontrolcu, durumYonetici);
 
     ObjeleriDoldur();
 }
@@ -19,7 +20,7 @@ ObjeYonetici::~ObjeYonetici() {
     delete karakter;
     delete harita;
     delete kesisimKontrolcu;
-
+    delete durumYonetici;
 }
 
 std::vector<Sandik>& ObjeYonetici::getSandiklar(){
@@ -36,10 +37,6 @@ Karakter* ObjeYonetici::getKarakter(){
 
 Harita* ObjeYonetici::getHarita(){
     return harita;
-}
-
-KesisimKontrolcu* ObjeYonetici::getKesisimKontolcu() {
-    return kesisimKontrolcu;
 }
 
 void ObjeYonetici::SandiklariDoldur(){

@@ -19,6 +19,8 @@ class Sandik: public GameObject{
         Vector2 getCizimPozisyonu();
         void HareketEttir(Vector2 yeniCizimPozisyonu);
         bool getHedefteMi();
+        Vector2 getPozisyon() const {return cizimPozisyonu;};
+
     private:
         KesisimKontrolcu* kesisimKontrolcu;
         Vector2 cizimPozisyonu;

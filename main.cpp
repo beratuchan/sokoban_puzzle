@@ -12,8 +12,11 @@ int main() {
     SetTargetFPS(60);
     InitWindow(9*64, 8*64, "2D Oyun Projesi");
     SeviyeSistemi seviyeSistemi;
+
     while(!WindowShouldClose()){
-        GirdiKontrolcu::HareketKontrol();
+        if (seviyeSistemi.getObjeYonetici()) {
+            GirdiKontrolcu::HareketKontrol(seviyeSistemi.getObjeYonetici());
+        }
         BeginDrawing();
         ClearBackground((Color){122, 146, 148, 255});
         seviyeSistemi.Dongu();

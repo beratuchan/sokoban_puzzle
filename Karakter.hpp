@@ -6,21 +6,26 @@
 #include "YonEnum.hpp"
 #include "GirdiKontrolcu.hpp"
 #include "KesisimKontrolcu.hpp"
+#include "DurumYonetici.hpp"
 
 class Karakter : public GameObject {
     public:
-        Karakter(Vector2 pozisyon, KesisimKontrolcu* kesisimKontrolcu);
+        Karakter(Vector2 pozisyon, KesisimKontrolcu* kesisimKontrolcu, DurumYonetici* durumYonetici);
         ~Karakter();
         void Guncelle() override;
         void Ciz() override;
         void AnimasyonuGuncelle();
         Vector2 IleriHucrePozisyonu(Yon yon, const Vector2& baslangicPoz);
+        void DurumKaydet();
+        void PozisyonAta(Vector2 yeniPozisyon);
 
     private:
         Texture2D objeDokusu;
         Vector2 cizimPozisyonu;
+        Vector2 oncekiPozisyon;
         Rectangle kare;
-        KesisimKontrolcu* m_kesisimKontrolcu;
+        KesisimKontrolcu* kesisimKontrolcu;
+        DurumYonetici* durumYonetici;
 
         int currentFrame = 0;
         int framesCounter = 0;
