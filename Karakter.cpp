@@ -50,7 +50,12 @@ void Karakter::HareketEttir(){
 }
 
 void Karakter::Guncelle() {
-    
+    if(buzdaKayiyor) {
+        BuzdaKay();
+        AnimasyonuGuncelle();
+        return;
+    }
+
     if(hareketEdiyor){
         HareketEttir();
         AnimasyonuGuncelle();
@@ -59,21 +64,68 @@ void Karakter::Guncelle() {
 
     mevcutYon = GirdiKontrolcu::mevcutYon;
     if(mevcutYon != Yon::HAREKETSIZ) {
-        const Vector2 ileriHucre = IleriHucrePozisyonu(mevcutYon, cizimPozisyonu);
-        bool ilerisiBos = kesisimKontrolcu->HucreBos(ileriHucre);
-        const Vector2 ikiIleriHucre = IleriHucrePozisyonu(mevcutYon, ileriHucre);
-        bool ikiIlerisiBos = kesisimKontrolcu->HucreBos(ikiIleriHucre);
-        bool ilerisiSandik = kesisimKontrolcu->HucreSandik(ileriHucre);
+        Vector2 ileriHucre = IleriHucrePozisyonu(mevcutYon, cizimPozisyonu);
+        bool ilerisiBuz = kesisimKontrolcu->HucreBuz(ileriHucre);
 
-        if(ilerisiBos || (ilerisiSandik && ikiIlerisiBos)){
-            if(ilerisiSandik){
-                Sandik *sandik = kesisimKontrolcu->HucredekiSandigiDondur(ileriHucre);
-                sandik->HareketTetikle(ikiIleriHucre,mevcutYon);
+        if(ilerisiBuz && kesisimKontrolcu->HucreBos(ileriHucre)) {
+            BuzdaKayTetikle();
+        } else {
+            bool ilerisiBos = kesisimKontrolcu->HucreBos(ileriHucre);
+            Vector2 ikiIleriHucre = IleriHucrePozisyonu(mevcutYon, ileriHucre);
+            bool ikiIlerisiBos = kesisimKontrolcu->HucreBos(ikiIleriHucre);
+            bool ilerisiSandik = kesisimKontrolcu->HucreSandik(ileriHucre);
+
+            if (ilerisiBos || (ilerisiSandik && ikiIlerisiBos)) {
+                if (ilerisiSandik) {
+                    Sandik *sandik = kesisimKontrolcu->HucredekiSandigiDondur(ileriHucre);
+                    sandik->HareketTetikle(ikiIleriHucre, mevcutYon);
+                }
+                HareketTetikle(ileriHucre);
+                DurumKaydet();
             }
-            HareketTetikle(ileriHucre);
-            DurumKaydet();
-            GirdiKontrolcu::hareketSayaci++;
         }
+        GirdiKontrolcu::hareketSayaci++;
+    }
+}
+void Karakter::BuzdaKayTetikle(){
+    buzdaKayiyor = true;
+    gidilecekPozisyon = IleriHucrePozisyonu(mevcutYon, cizimPozisyonu);
+    
+    while(kesisimKontrolcu->HucreBuz(gidilecekPozisyon) && kesisimKontrolcu->HucreBos(gidilecekPozisyon)) 
+    {
+        Vector2 siradaki = IleriHucrePozisyonu(mevcutYon, gidilecekPozisyon);
+        if(kesisimKontrolcu->HucreBuz(siradaki) || kesisimKontrolcu->HucreBos(siradaki)){
+            gidilecekPozisyon = siradaki;
+        }
+        else{
+            break;
+        }
+    }
+}
+
+
+void Karakter::BuzdaKay() {
+    Vector2 yonVektoru = {0};
+    switch(mevcutYon) {
+        case Yon::YUKARI: yonVektoru.y = -1; break;
+        case Yon::ASAGI: yonVektoru.y = 1; break;
+        case Yon::SOLA: yonVektoru.x = -1; break;
+        case Yon::SAGA: yonVektoru.x = 1; break;
+        default: break;
+    }
+
+    cizimPozisyonu.x += yonVektoru.x * 8.0f;
+    cizimPozisyonu.y += yonVektoru.y * 8.0f;
+
+    Vector2 fark = {
+        gidilecekPozisyon.x - cizimPozisyonu.x,
+        gidilecekPozisyon.y - cizimPozisyonu.y
+    };
+
+    if(abs(fark.x) <= 8.0f && abs(fark.y) <= 8.0f) {
+        cizimPozisyonu = gidilecekPozisyon;
+        buzdaKayiyor = false;
+        DurumKaydet();
     }
 }
 
@@ -82,7 +134,7 @@ void Karakter::PozisyonAta(Vector2 yeniPozisyon){
     cizimPozisyonu = yeniPozisyon;
 }
 
-Vector2 Karakter::IleriHucrePozisyonu(Yon yon, const Vector2& baslangicPoz){
+Vector2 Karakter::IleriHucrePozisyonu(Yon yon, Vector2& baslangicPoz){
     Vector2 ileriPoz = baslangicPoz;
     switch(yon) {
         case Yon::YUKARI: ileriPoz.y -= 64; break;
@@ -111,35 +163,64 @@ void Karakter::DurumKaydet(){
 };
 
 void Karakter::AnimasyonuGuncelle() {
-    mevcutFrame+=0.2;
+    if(buzdaKayiyor){
+            switch(mevcutYon) {
+            case Yon::ASAGI:
+                kare.y = 0;
+                kare.x = 0;
+                break;
+                
+            case Yon::YUKARI:
+                kare.x = 3*64;
+                kare.y = 0;
+                break;
+                
+            case Yon::SAGA:
+                kare.x = 0;
+                kare.y = 64;
+
+                break;
+                
+            case Yon::SOLA:
+                kare.y = 64;
+                kare.x = 3*64;
+                break;
+                
+            case Yon::HAREKETSIZ:
+                mevcutFrame = 0; 
+                break;
+        }
+    }else{
+            mevcutFrame+=0.2;
 
     switch(mevcutYon) {
-        case Yon::ASAGI:
-            kare.y = 0;
-            if(mevcutFrame >= 3) mevcutFrame = 0;
-            kare.x = floorf(mevcutFrame) * frameGenisligi;
-            break;
-            
-        case Yon::YUKARI:
-            kare.y = 0;
-            if(mevcutFrame >= 3) mevcutFrame = 0;
-            kare.x = (floorf(mevcutFrame)+3) * frameGenisligi;
-            break;
-            
-        case Yon::SAGA:
-            kare.y = frameYuksekligi;
-            if(mevcutFrame >= 2) mevcutFrame = 0;
-            kare.x = floorf(mevcutFrame) * frameGenisligi;
-            break;
-            
-        case Yon::SOLA:
-            kare.y = frameYuksekligi;
-            if(mevcutFrame >= 2) mevcutFrame = 0;
-            kare.x = (floorf(mevcutFrame) + 3) * frameGenisligi;
-            break;
-            
-        case Yon::HAREKETSIZ:
-            mevcutFrame = 0; 
-            break;
+            case Yon::ASAGI:
+                kare.y = 0;
+                if(mevcutFrame >= 3) mevcutFrame = 0;
+                kare.x = floorf(mevcutFrame) * frameGenisligi;
+                break;
+                
+            case Yon::YUKARI:
+                kare.y = 0;
+                if(mevcutFrame >= 3) mevcutFrame = 0;
+                kare.x = (floorf(mevcutFrame)+3) * frameGenisligi;
+                break;
+                
+            case Yon::SAGA:
+                kare.y = frameYuksekligi;
+                if(mevcutFrame >= 2) mevcutFrame = 0;
+                kare.x = floorf(mevcutFrame) * frameGenisligi;
+                break;
+                
+            case Yon::SOLA:
+                kare.y = frameYuksekligi;
+                if(mevcutFrame >= 2) mevcutFrame = 0;
+                kare.x = (floorf(mevcutFrame) + 3) * frameGenisligi;
+                break;
+                
+            case Yon::HAREKETSIZ:
+                mevcutFrame = 0; 
+                break;
+        }
     }
 }

@@ -46,6 +46,19 @@ bool KesisimKontrolcu::HucreBos(Vector2 hucre) const {
     return (!HucreDuvar(hucre) && !HucreSandik(hucre));
 }
 
+bool KesisimKontrolcu::HucreBuz(Vector2 hucre){
+    if (!m_harita) return false;
+    
+    int satir = (int)(hucre.y / 64);
+    int sutun = (int)(hucre.x / 64);
+    auto izgara = m_harita->getIzgara();
+
+    if (satir >= 0 && satir < (int)izgara.size() && sutun >= 0 && sutun < (int)izgara[0].size()) {
+        return izgara[satir][sutun] == 2;
+    }
+    return false;
+}
+
 Sandik* KesisimKontrolcu::HucredekiSandigiDondur(Vector2 hucre) const {
     if (!m_sandiklar || m_sandiklar->empty()) return nullptr;
     

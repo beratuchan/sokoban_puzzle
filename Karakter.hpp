@@ -15,12 +15,14 @@ class Karakter : public GameObject {
         void Guncelle() override;
         void Ciz() override;
         void AnimasyonuGuncelle();
-        Vector2 IleriHucrePozisyonu(Yon yon, const Vector2& baslangicPoz);
+        Vector2 IleriHucrePozisyonu(Yon yon, Vector2& baslangicPoz);
         void DurumKaydet();
         void PozisyonAta(Vector2 yeniPozisyon);
         Vector2 getCizimPozisyonu() {return cizimPozisyonu;};
         void HareketEttir();
         void HareketTetikle(Vector2 gidilecekPozisyon);
+        void BuzdaKayTetikle();
+        void BuzdaKay();
 
     private:
         Texture2D objeDokusu;
@@ -33,6 +35,7 @@ class Karakter : public GameObject {
         Yon mevcutYon;
 
         bool hareketEdiyor = false;
+        bool buzdaKayiyor = false;
         float mevcutFrame = 0;
         int frameGenisligi;
         int frameYuksekligi;

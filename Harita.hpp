@@ -17,6 +17,7 @@ private:
     std::vector<std::vector<int>> izgara;
     Texture2D zemin;
     Texture2D duvar;
+    Texture2D buz;
     int satirSayisi;
     int sutunSayisi;
 };

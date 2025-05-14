@@ -7,11 +7,13 @@ Harita::Harita(std::vector<std::vector<int>> harita){
     sutunSayisi = izgara[0].size();
     zemin = LoadTexture("resources/zemin.png");
     duvar = LoadTexture("resources/duvar.png");
+    buz = LoadTexture("resources/buz.png");
 }
 
 Harita::~Harita(){
     UnloadTexture(zemin);
     UnloadTexture(duvar);
+    UnloadTexture(buz);
 }
 
 std::vector<std::vector<int>> Harita::getIzgara(){
@@ -24,8 +26,11 @@ void Harita::Ciz(){
             if(izgara[i][j]==1){
                 DrawTextureRec(duvar,Rectangle{0,0,64,64},{j*64.0f,i*64.0f},WHITE);
             }
-            else {
+            else if(izgara[i][j]==0) {
                 DrawTextureRec(zemin,Rectangle{0,0,64,64},{j*64.0f,i*64.0f},WHITE);
+            }
+            else{
+                DrawTextureRec(buz, Rectangle{0,0,64,64},{j*64.0f,i*64.0f},WHITE);  
             }
         }
     }
