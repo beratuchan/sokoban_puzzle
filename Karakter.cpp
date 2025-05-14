@@ -71,6 +71,7 @@ void Karakter::Guncelle() {
         bool ilerisiSandik = kesisimKontrolcu->HucreSandik(ileriHucre);
         Vector2 ikiIleriHucre = IleriHucrePozisyonu(mevcutYon, ileriHucre);
         bool ikiIlerisiBos = kesisimKontrolcu->HucreBos(ikiIleriHucre);
+        bool ikiIlerisiBuz = kesisimKontrolcu->HucreBuz(ikiIleriHucre);
 
         if (ilerisiBuz && (ilerisiBos||ilerisiSandik)) {
             if(ilerisiSandik){
@@ -82,7 +83,12 @@ void Karakter::Guncelle() {
         } else if ((ilerisiBos || (ilerisiSandik && ikiIlerisiBos))) {
             if (ilerisiSandik) {
                 Sandik* sandik = kesisimKontrolcu->HucredekiSandigiDondur(ileriHucre);
-                sandik->HareketTetikle(ikiIleriHucre, mevcutYon); 
+                if(ikiIlerisiBuz){
+                    sandik->BuzdaKayTetikle(mevcutYon);
+                }
+                else{
+                    sandik->HareketTetikle(ikiIleriHucre, mevcutYon); 
+                }
             }
             HareketTetikle(ileriHucre);
             GirdiKontrolcu::hareketSayaci++;
@@ -99,6 +105,10 @@ void Karakter::BuzdaKayTetikle(){
     {
         Vector2 siradaki = IleriHucrePozisyonu(mevcutYon, gidilecekPozisyon);
         if(kesisimKontrolcu->HucreBuz(siradaki) || kesisimKontrolcu->HucreBos(siradaki)){
+            if(kesisimKontrolcu->HucreSandik(siradaki)){
+                Sandik* sandik = kesisimKontrolcu->HucredekiSandigiDondur(siradaki);
+                sandik->BuzdaKayTetikle(mevcutYon);
+            }
             gidilecekPozisyon = siradaki;
         }
         else{
