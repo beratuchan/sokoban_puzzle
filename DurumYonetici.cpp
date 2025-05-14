@@ -6,11 +6,6 @@ void DurumYonetici::Kaydet(const Durum& durum) {
     }
     durumlar.push_back(durum);
     mevcutIndex++;
-
-    if (durumlar.size() > MAX_DURUM) {
-        durumlar.erase(durumlar.begin());
-        mevcutIndex--;
-    }
 }
 
 Durum DurumYonetici::GeriAl() {

@@ -21,5 +21,4 @@ public:
 private:
     std::vector<Durum> durumlar;
     int mevcutIndex = -1;
-    static constexpr size_t MAX_DURUM = 100;
 };
