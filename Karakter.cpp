@@ -85,9 +85,10 @@ void Karakter::Guncelle() {
                 sandik->HareketTetikle(ikiIleriHucre, mevcutYon); 
             }
             HareketTetikle(ileriHucre);
-            DurumKaydet();
             GirdiKontrolcu::hareketSayaci++;
         }
+
+        DurumKaydet();
     }
 }
 void Karakter::BuzdaKayTetikle(){
@@ -127,7 +128,6 @@ void Karakter::BuzdaKay() {
     if(abs(kalanXYolu) <= 8.0f && abs(kalanYYolu) <= 8.0f) {
         cizimPozisyonu = gidilecekPozisyon;
         buzdaKayiyor = false;
-        DurumKaydet();
     }
 }
 

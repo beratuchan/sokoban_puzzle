@@ -55,6 +55,8 @@ Vector2 Sandik::IleriHucrePozisyonu(Yon yon, Vector2& baslangicPoz){
 }
 
 void Sandik::BuzdaKay() {
+
+    float adim = 8.0f;
     Vector2 yonVektoru = {0};
     switch (mevcutYon) {
         case Yon::YUKARI: yonVektoru.y = -1; break;
@@ -64,11 +66,11 @@ void Sandik::BuzdaKay() {
         default: break;
     }
 
-    cizimPozisyonu.x += yonVektoru.x * 16.0f;
-    cizimPozisyonu.y += yonVektoru.y * 16.0f;
+    cizimPozisyonu.x += yonVektoru.x * adim;
+    cizimPozisyonu.y += yonVektoru.y * adim;
 
-    if (abs(cizimPozisyonu.x - gidilecekPozisyon.x) < 16.0f &&
-        abs(cizimPozisyonu.y - gidilecekPozisyon.y) < 16.0f) {
+    if (abs(cizimPozisyonu.x - gidilecekPozisyon.x) < adim &&
+        abs(cizimPozisyonu.y - gidilecekPozisyon.y) < adim) {
         cizimPozisyonu = gidilecekPozisyon;
         buzdaKayiyor = false;
     }
