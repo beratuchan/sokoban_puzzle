@@ -3,12 +3,14 @@
 
 #include "YonEnum.hpp"
 #include "ObjeYonetici.hpp"
+#include "SeviyeSistemi.hpp"
 
 class ObjeYonetici;
+class SeviyeSistemi;
 
 class GirdiKontrolcu{
     public:
-        static void HareketKontrol(ObjeYonetici* objeYonetici);
+        static void HareketKontrol(ObjeYonetici* objeYonetici, SeviyeSistemi& SeviyeSistemi);
         static Yon mevcutYon;
         static int hareketSayaci;
     private:

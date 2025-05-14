@@ -14,7 +14,7 @@ int main() {
     SeviyeSistemi seviyeSistemi;
 
     while(!WindowShouldClose()){
-        GirdiKontrolcu::HareketKontrol(seviyeSistemi.getObjeYonetici());
+        GirdiKontrolcu::HareketKontrol(seviyeSistemi.getObjeYonetici(), seviyeSistemi);
         BeginDrawing();
         ClearBackground((Color){122, 146, 148, 255});
         seviyeSistemi.Dongu();

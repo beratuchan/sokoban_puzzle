@@ -3,6 +3,7 @@
 
 #include "ObjeYonetici.hpp"
 #include "Seviyeler.hpp"
+class ObjeYonetici;
 
 class SeviyeSistemi {
     public:
