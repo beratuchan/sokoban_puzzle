@@ -13,6 +13,8 @@
 #include "DurumYonetici.hpp"
 
 class Karakter;
+class Sandik;
+class Hedef;
 
 class ObjeYonetici{
     public:

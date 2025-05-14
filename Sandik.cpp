@@ -27,11 +27,14 @@ bool Sandik::getHedefteMi(){
 }
 
 void Sandik::Guncelle(){
-    
+    if(buzdaKayiyor){
+        BuzdaKay();
+        return;
+    }
     if (hareketEdiyor){
         HareketEttir();
+        return;
     }
-
     std::string yeniDokuYolu = GorselSec();
     if(yeniDokuYolu!=dokuYolu){
         dokuYolu = yeniDokuYolu;
@@ -39,8 +42,56 @@ void Sandik::Guncelle(){
     }
 }
 
+Vector2 Sandik::IleriHucrePozisyonu(Yon yon, Vector2& baslangicPoz){
+    Vector2 ileriPoz = baslangicPoz;
+    switch(yon) {
+        case Yon::YUKARI: ileriPoz.y -= 64; break;
+        case Yon::ASAGI: ileriPoz.y += 64; break;
+        case Yon::SAGA: ileriPoz.x += 64; break;
+        case Yon::SOLA: ileriPoz.x -= 64; break;
+        default: break;
+    }
+    return ileriPoz;
+}
+
+void Sandik::BuzdaKay() {
+    Vector2 yonVektoru = {0};
+    switch (mevcutYon) {
+        case Yon::YUKARI: yonVektoru.y = -1; break;
+        case Yon::ASAGI: yonVektoru.y = 1; break;
+        case Yon::SOLA: yonVektoru.x = -1; break;
+        case Yon::SAGA: yonVektoru.x = 1; break;
+        default: break;
+    }
+
+    cizimPozisyonu.x += yonVektoru.x * 16.0f;
+    cizimPozisyonu.y += yonVektoru.y * 16.0f;
+
+    if (abs(cizimPozisyonu.x - gidilecekPozisyon.x) < 16.0f &&
+        abs(cizimPozisyonu.y - gidilecekPozisyon.y) < 16.0f) {
+        cizimPozisyonu = gidilecekPozisyon;
+        buzdaKayiyor = false;
+    }
+}
+
+void Sandik::BuzdaKayTetikle(Yon yon) {
+    mevcutYon = yon;
+    buzdaKayiyor = true;
+    gidilecekPozisyon = IleriHucrePozisyonu(mevcutYon,cizimPozisyonu); 
+    while(kesisimKontrolcu->HucreBuz(gidilecekPozisyon) && kesisimKontrolcu->HucreBos(gidilecekPozisyon)) 
+    {
+        Vector2 siradaki = IleriHucrePozisyonu(mevcutYon, gidilecekPozisyon);
+        if(kesisimKontrolcu->HucreBuz(siradaki) || kesisimKontrolcu->HucreBos(siradaki)){
+            gidilecekPozisyon = siradaki;
+        }
+        else{
+            break;
+        }
+    }
+}
+
 void Sandik::HareketTetikle(Vector2 gidilecekPozisyon, Yon mevcutYon){
-    hareketEdiyor = true;
+    this->hareketEdiyor = true;
     this->mevcutYon = mevcutYon;
     this->gidilecekPozisyon = gidilecekPozisyon;
 }

@@ -8,6 +8,8 @@
 #include "KesisimKontrolcu.hpp"
 #include "DurumYonetici.hpp"
 
+class KesisimKontrolcu;
+
 class Karakter : public GameObject {
     public:
         Karakter(Vector2 pozisyon, KesisimKontrolcu* kesisimKontrolcu, DurumYonetici* durumYonetici);

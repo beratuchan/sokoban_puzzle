@@ -50,41 +50,44 @@ void Karakter::HareketEttir(){
 }
 
 void Karakter::Guncelle() {
-    if(buzdaKayiyor) {
+    if (buzdaKayiyor) {
         BuzdaKay();
         AnimasyonuGuncelle();
         return;
     }
 
-    if(hareketEdiyor){
+    if (hareketEdiyor) {
         HareketEttir();
         AnimasyonuGuncelle();
         return;
     }
 
     mevcutYon = GirdiKontrolcu::mevcutYon;
-    if(mevcutYon != Yon::HAREKETSIZ) {
+    
+    if (mevcutYon != Yon::HAREKETSIZ) {
         Vector2 ileriHucre = IleriHucrePozisyonu(mevcutYon, cizimPozisyonu);
         bool ilerisiBuz = kesisimKontrolcu->HucreBuz(ileriHucre);
+        bool ilerisiBos = kesisimKontrolcu->HucreBos(ileriHucre);
+        bool ilerisiSandik = kesisimKontrolcu->HucreSandik(ileriHucre);
+        Vector2 ikiIleriHucre = IleriHucrePozisyonu(mevcutYon, ileriHucre);
+        bool ikiIlerisiBos = kesisimKontrolcu->HucreBos(ikiIleriHucre);
 
-        if(ilerisiBuz && kesisimKontrolcu->HucreBos(ileriHucre)) {
-            BuzdaKayTetikle();
-        } else {
-            bool ilerisiBos = kesisimKontrolcu->HucreBos(ileriHucre);
-            Vector2 ikiIleriHucre = IleriHucrePozisyonu(mevcutYon, ileriHucre);
-            bool ikiIlerisiBos = kesisimKontrolcu->HucreBos(ikiIleriHucre);
-            bool ilerisiSandik = kesisimKontrolcu->HucreSandik(ileriHucre);
-
-            if (ilerisiBos || (ilerisiSandik && ikiIlerisiBos)) {
-                if (ilerisiSandik) {
-                    Sandik *sandik = kesisimKontrolcu->HucredekiSandigiDondur(ileriHucre);
-                    sandik->HareketTetikle(ikiIleriHucre, mevcutYon);
-                }
-                HareketTetikle(ileriHucre);
-                DurumKaydet();
+        if (ilerisiBuz && (ilerisiBos||ilerisiSandik)) {
+            if(ilerisiSandik){
+                Sandik* sandik = kesisimKontrolcu->HucredekiSandigiDondur(ileriHucre);
+                sandik->BuzdaKayTetikle(mevcutYon); 
             }
+            BuzdaKayTetikle();
+            
+        } else if ((ilerisiBos || (ilerisiSandik && ikiIlerisiBos))) {
+            if (ilerisiSandik) {
+                Sandik* sandik = kesisimKontrolcu->HucredekiSandigiDondur(ileriHucre);
+                sandik->HareketTetikle(ikiIleriHucre, mevcutYon); 
+            }
+            HareketTetikle(ileriHucre);
+            DurumKaydet();
+            GirdiKontrolcu::hareketSayaci++;
         }
-        GirdiKontrolcu::hareketSayaci++;
     }
 }
 void Karakter::BuzdaKayTetikle(){
@@ -117,12 +120,11 @@ void Karakter::BuzdaKay() {
     cizimPozisyonu.x += yonVektoru.x * 8.0f;
     cizimPozisyonu.y += yonVektoru.y * 8.0f;
 
-    Vector2 fark = {
-        gidilecekPozisyon.x - cizimPozisyonu.x,
-        gidilecekPozisyon.y - cizimPozisyonu.y
-    };
+    float kalanXYolu = gidilecekPozisyon.x - cizimPozisyonu.x;
+    float kalanYYolu = gidilecekPozisyon.y - cizimPozisyonu.y;
 
-    if(abs(fark.x) <= 8.0f && abs(fark.y) <= 8.0f) {
+
+    if(abs(kalanXYolu) <= 8.0f && abs(kalanYYolu) <= 8.0f) {
         cizimPozisyonu = gidilecekPozisyon;
         buzdaKayiyor = false;
         DurumKaydet();
