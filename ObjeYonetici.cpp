@@ -8,9 +8,10 @@ ObjeYonetici::ObjeYonetici(int seviyeNo){
 
     kesisimKontrolcu = new KesisimKontrolcu(harita, &sandiklar, &hedefler);
     durumYonetici = new DurumYonetici();
-
-    SandiklariDoldur();
+    
     HedefleriDoldur();
+    SandiklariDoldur();
+    
     karakter = new Karakter(SEVIYELER[seviyeNo].karakter, kesisimKontrolcu, durumYonetici);
 
     ObjeleriDoldur();

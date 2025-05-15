@@ -16,17 +16,18 @@ class Karakter : public GameObject {
         ~Karakter();
         void Guncelle() override;
         void Ciz() override;
+        void Tetikle();
         void AnimasyonuGuncelle();
         Vector2 IleriHucrePozisyonu(Yon yon, Vector2& baslangicPoz);
         void DurumKaydet();
         void PozisyonAta(Vector2 yeniPozisyon);
         Vector2 getCizimPozisyonu() {return cizimPozisyonu;};
         void HareketEttir();
+        void BuzdaKay();
+        
+    private:
         void HareketTetikle(Vector2 gidilecekPozisyon);
         void BuzdaKayTetikle();
-        void BuzdaKay();
-
-    private:
         Texture2D objeDokusu;
         Vector2 cizimPozisyonu;
         Vector2 gidilecekPozisyon;

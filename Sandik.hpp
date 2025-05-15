@@ -20,15 +20,18 @@ class Sandik: public GameObject{
         std::string GorselSec();
         Vector2 getCizimPozisyonu();
         void PozisyonAta(Vector2 yeniPozisyon);
-        void BuzdaKayTetikle(Yon yon);
+        void Tetikle(Yon yon);
         void BuzdaKay();
-        void HareketTetikle(Vector2 yeniCizimPozisyonu, Yon mevcutYon);
+        bool AksiyonaGecebilir(Yon yon);
         Vector2 IleriHucrePozisyonu(Yon yon, Vector2& baslangicPoz);
         void HareketEttir();
         bool getHedefteMi();
         Vector2 getPozisyon() const {return cizimPozisyonu;};
 
     private:
+        void HareketTetikle(Yon mevcutYon);
+        void BuzdaKayTetikle(Yon yon);
+        
         KesisimKontrolcu* kesisimKontrolcu;
         Vector2 cizimPozisyonu;
         std::string dokuYolu;

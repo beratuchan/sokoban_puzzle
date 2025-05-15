@@ -1,8 +1,9 @@
 #include "Sandik.hpp"
 #include "cmath"
 
-Sandik::Sandik(Vector2 cizim_pozisyonu, std::string renk, KesisimKontrolcu* kesisimKontrolcu):kesisimKontrolcu(kesisimKontrolcu)
+Sandik::Sandik(Vector2 cizim_pozisyonu, std::string renk, KesisimKontrolcu* kesisimKontrolcu)
 {    
+    this->kesisimKontrolcu = kesisimKontrolcu;
     this->renk = renk;
     this->cizimPozisyonu = cizim_pozisyonu;
     this->dokuYolu = GorselSec();
@@ -12,6 +13,10 @@ Sandik::Sandik(Vector2 cizim_pozisyonu, std::string renk, KesisimKontrolcu* kesi
 Sandik::~Sandik(){
     
 };
+
+bool Sandik::AksiyonaGecebilir(Yon yon){
+    return kesisimKontrolcu->HucreBos(IleriHucrePozisyonu(yon,cizimPozisyonu));
+}
 
 void Sandik::PozisyonAta(Vector2 yeniPozisyon){
     cizimPozisyonu = yeniPozisyon;
@@ -25,6 +30,7 @@ Vector2 Sandik::getCizimPozisyonu(){
 bool Sandik::getHedefteMi(){
     return hedefteMi;
 }
+
 
 void Sandik::Guncelle(){
     if(buzdaKayiyor){
@@ -54,8 +60,17 @@ Vector2 Sandik::IleriHucrePozisyonu(Yon yon, Vector2& baslangicPoz){
     return ileriPoz;
 }
 
-void Sandik::BuzdaKay() {
+void Sandik::Tetikle(Yon yon){
+    Vector2 ileriHucre = IleriHucrePozisyonu(yon, cizimPozisyonu);
+    if(kesisimKontrolcu->HucreBos(ileriHucre)){
+        if(kesisimKontrolcu->HucreBuz(ileriHucre)){
+            BuzdaKayTetikle(yon);
+        }
+        else HareketTetikle(yon);
+    }
+}
 
+void Sandik::BuzdaKay() {
     float adim = 8.0f;
     Vector2 yonVektoru = {0};
     switch (mevcutYon) {
@@ -69,8 +84,9 @@ void Sandik::BuzdaKay() {
     cizimPozisyonu.x += yonVektoru.x * adim;
     cizimPozisyonu.y += yonVektoru.y * adim;
 
-    if (abs(cizimPozisyonu.x - gidilecekPozisyon.x) < adim &&
-        abs(cizimPozisyonu.y - gidilecekPozisyon.y) < adim) {
+    float kalanXYolu = gidilecekPozisyon.x - cizimPozisyonu.x;
+    float kalanYYolu = gidilecekPozisyon.y - cizimPozisyonu.y;
+    if(abs(kalanXYolu) <= adim && abs(kalanYYolu) <= adim) {
         cizimPozisyonu = gidilecekPozisyon;
         buzdaKayiyor = false;
     }
@@ -80,10 +96,11 @@ void Sandik::BuzdaKayTetikle(Yon yon) {
     mevcutYon = yon;
     buzdaKayiyor = true;
     gidilecekPozisyon = IleriHucrePozisyonu(mevcutYon,cizimPozisyonu); 
-    while(kesisimKontrolcu->HucreBuz(gidilecekPozisyon) && kesisimKontrolcu->HucreBos(gidilecekPozisyon)) 
+    
+    while(kesisimKontrolcu->HucreBos(gidilecekPozisyon)) 
     {
         Vector2 siradaki = IleriHucrePozisyonu(mevcutYon, gidilecekPozisyon);
-        if(kesisimKontrolcu->HucreBuz(siradaki) || kesisimKontrolcu->HucreBos(siradaki)){
+        if(kesisimKontrolcu->HucreBos(siradaki)){
             gidilecekPozisyon = siradaki;
         }
         else{
@@ -92,10 +109,10 @@ void Sandik::BuzdaKayTetikle(Yon yon) {
     }
 }
 
-void Sandik::HareketTetikle(Vector2 gidilecekPozisyon, Yon mevcutYon){
+void Sandik::HareketTetikle(Yon mevcutYon){
     this->hareketEdiyor = true;
     this->mevcutYon = mevcutYon;
-    this->gidilecekPozisyon = gidilecekPozisyon;
+    this->gidilecekPozisyon = IleriHucrePozisyonu(mevcutYon,cizimPozisyonu);
 }
 
 void Sandik::HareketEttir(){
@@ -124,6 +141,7 @@ void Sandik::HareketEttir(){
         break;
     }
 };
+
 
 
 void Sandik::Ciz(){

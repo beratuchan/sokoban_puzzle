@@ -22,8 +22,11 @@ class SeviyeSistemi {
         int mevcutSeviye;
         ObjeYonetici* objeYonetici;
         bool SeviyeTamamlandiMi() const;
-        Texture2D seviyetamam = DokuYonetici::DokuYukle("resources/seviyesonu.png");
         
+        Texture2D seviyetamam = DokuYonetici::DokuYukle("resources/seviyesonu.png");
+        Texture2D sonraki = DokuYonetici::DokuYukle("resources/sagok.png");
+        Texture2D onceki = DokuYonetici::DokuYukle("resources/solok.png");
+        Texture2D tekrar = DokuYonetici::DokuYukle("resources/tekrar.png");
         float ekrangenislik = (9*64);
         float ekranyukseklik = (11*64);
         float bos = 10;

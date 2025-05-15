@@ -51,9 +51,18 @@ void SeviyeSistemi::MesajVer(){
         DrawRectangleRec(buton2, buton2Renk);
         DrawRectangleRec(buton3, buton3Renk);
 
+        DokuYonetici::DokuCiz(onceki,{0,0,53,53},{2*bos+ekrangenislik/4,255+ekranyukseklik/4+bos});
+        DokuYonetici::DokuCiz(tekrar,{0,0,53,53},{3*bos+ekrangenislik/4+butongen + (2*butongen-53)/2,255+ekranyukseklik/4+bos});
+        DokuYonetici::DokuCiz(sonraki,{0,0,53,53},{4*bos+ekrangenislik/4+3*butongen,255+ekranyukseklik/4+bos});
+
         if (CheckCollisionPointRec(fare, buton1)) {
             if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                 OncekiSeviye();
+        }
+
+        if (CheckCollisionPointRec(fare, buton2)) {
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                Baslat();
         }
 
         if (CheckCollisionPointRec(fare, buton3)) {
