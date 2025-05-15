@@ -75,10 +75,10 @@ void Karakter::BuzdaKayTetikle(){
     buzdaKayiyor = true;
     gidilecekPozisyon = IleriHucrePozisyonu(mevcutYon, cizimPozisyonu);
     
-    while(kesisimKontrolcu->HucreBos(gidilecekPozisyon)) 
+    while(kesisimKontrolcu->HucreBuz(gidilecekPozisyon)) 
     {
         Vector2 siradaki = IleriHucrePozisyonu(mevcutYon, gidilecekPozisyon);
-        if(kesisimKontrolcu->HucreBos(siradaki) ){
+        if(kesisimKontrolcu->HucreBos(siradaki)){
             gidilecekPozisyon = siradaki;
         }
         else{

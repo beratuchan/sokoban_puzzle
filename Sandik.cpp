@@ -97,7 +97,7 @@ void Sandik::BuzdaKayTetikle(Yon yon) {
     buzdaKayiyor = true;
     gidilecekPozisyon = IleriHucrePozisyonu(mevcutYon,cizimPozisyonu); 
     
-    while(kesisimKontrolcu->HucreBos(gidilecekPozisyon)) 
+    while(kesisimKontrolcu->HucreBuz(gidilecekPozisyon)) 
     {
         Vector2 siradaki = IleriHucrePozisyonu(mevcutYon, gidilecekPozisyon);
         if(kesisimKontrolcu->HucreBos(siradaki)){

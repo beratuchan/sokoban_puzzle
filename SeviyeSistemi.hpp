@@ -16,6 +16,7 @@ class SeviyeSistemi {
         void Dongu();
         bool TumSeviyelerBittiMi() const;
         void MesajVer();
+        void ButonEkle();
         ObjeYonetici* getObjeYonetici() { return objeYonetici; }
 
     private:
@@ -24,9 +25,9 @@ class SeviyeSistemi {
         bool SeviyeTamamlandiMi() const;
         
         Texture2D seviyetamam = DokuYonetici::DokuYukle("resources/seviyesonu.png");
-        Texture2D sonraki = DokuYonetici::DokuYukle("resources/sagok.png");
-        Texture2D onceki = DokuYonetici::DokuYukle("resources/solok.png");
-        Texture2D tekrar = DokuYonetici::DokuYukle("resources/tekrar.png");
+        Texture2D sonraki = DokuYonetici::DokuYukle("resources/sagoklar.png");
+        Texture2D onceki = DokuYonetici::DokuYukle("resources/soloklar.png");
+        Texture2D tekrar = DokuYonetici::DokuYukle("resources/tekrarla.png");
         float ekrangenislik = (9*64);
         float ekranyukseklik = (11*64);
         float bos = 10;
