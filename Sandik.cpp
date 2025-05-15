@@ -86,6 +86,7 @@ void Sandik::BuzdaKay() {
 
     float kalanXYolu = gidilecekPozisyon.x - cizimPozisyonu.x;
     float kalanYYolu = gidilecekPozisyon.y - cizimPozisyonu.y;
+    
     if(abs(kalanXYolu) <= adim && abs(kalanYYolu) <= adim) {
         cizimPozisyonu = gidilecekPozisyon;
         buzdaKayiyor = false;
