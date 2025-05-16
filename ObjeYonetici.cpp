@@ -2,20 +2,17 @@
 
 ObjeYonetici::ObjeYonetici(int seviyeNo){
     harita = new Harita(SEVIYELER[seviyeNo].harita);
+    kesisimKontrolcu = new KesisimKontrolcu(this);
+    durumYonetici = new DurumYonetici();
 
     sandikStructlar = SEVIYELER[seviyeNo].sandiklar;
     hedefStructlar = SEVIYELER[seviyeNo].hedefler;
     kapanStructlar = SEVIYELER[seviyeNo].kapanlar;
 
-    kesisimKontrolcu = new KesisimKontrolcu(harita, &sandiklar, &hedefler);
-    durumYonetici = new DurumYonetici();
-    
+    karakter = new Karakter(SEVIYELER[seviyeNo].karakter, this, durumYonetici);
     HedefleriDoldur();
     SandiklariDoldur();
     KapanlariDoldur();
-
-    karakter = new Karakter(SEVIYELER[seviyeNo].karakter, kesisimKontrolcu, durumYonetici);
-
     ObjeleriDoldur();
     BaslangicDurumunuKaydet();
 }

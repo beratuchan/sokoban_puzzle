@@ -1,9 +1,9 @@
 #include "Karakter.hpp"
 #include "cmath"
 
-Karakter::Karakter(Vector2 cizim_pozisyonu, KesisimKontrolcu* kesisimKontrolcu, DurumYonetici* durumYonetici) {
+Karakter::Karakter(Vector2 cizim_pozisyonu, ObjeYonetici* objeYonetici, DurumYonetici* durumYonetici) {
+    this->objeYonetici = objeYonetici;
     this->cizimPozisyonu = cizim_pozisyonu;
-    this->kesisimKontrolcu = kesisimKontrolcu;
     this->durumYonetici = durumYonetici;
     objeDokusu = DokuYonetici::DokuYukle("resources/adam.png");
     frameGenisligi = objeDokusu.width / 6;
@@ -75,10 +75,10 @@ void Karakter::BuzdaKayTetikle(){
     buzdaKayiyor = true;
     gidilecekPozisyon = IleriHucrePozisyonu(mevcutYon, cizimPozisyonu);
     
-    while(kesisimKontrolcu->HucreBuz(gidilecekPozisyon)) 
+    while(objeYonetici->getKesisimKontolcu()->HucreBuz(gidilecekPozisyon)) 
     {
         Vector2 siradaki = IleriHucrePozisyonu(mevcutYon, gidilecekPozisyon);
-        if(kesisimKontrolcu->HucreBos(siradaki)){
+        if(objeYonetici->getKesisimKontolcu()->HucreBos(siradaki)){
             gidilecekPozisyon = siradaki;
         }
         else{
@@ -129,16 +129,16 @@ Vector2 Karakter::IleriHucrePozisyonu(Yon yon, Vector2& baslangicPoz){
 
 void Karakter::Tetikle(){
     Vector2 ileriHucre = IleriHucrePozisyonu(mevcutYon, cizimPozisyonu);
-    if(kesisimKontrolcu->HucreBos(ileriHucre)){
-        if(kesisimKontrolcu->HucreBuz(ileriHucre)){
+    if(objeYonetici->getKesisimKontolcu()->HucreBos(ileriHucre)){
+        if(objeYonetici->getKesisimKontolcu()->HucreBuz(ileriHucre)){
             BuzdaKayTetikle();
             return;
         }
         HareketTetikle(ileriHucre);
     }
     else{
-        if(kesisimKontrolcu->HucreSandik(ileriHucre)){
-            Sandik* sandik = kesisimKontrolcu->HucredekiSandigiDondur(ileriHucre);
+        if(objeYonetici->getKesisimKontolcu()->HucreSandik(ileriHucre)){
+            Sandik* sandik = objeYonetici->getKesisimKontolcu()->HucredekiSandigiDondur(ileriHucre);
             if(sandik->AksiyonaGecebilir(mevcutYon)){
                 sandik->Tetikle(mevcutYon);
                 HareketTetikle(ileriHucre);
@@ -155,7 +155,7 @@ void Karakter::DurumKaydet(){
     if(cizimPozisyonu.x != oncekiPozisyon.x || cizimPozisyonu.y != oncekiPozisyon.y) {
         Durum durum;
         durum.karakterPozisyon = cizimPozisyonu;
-        for(const auto& sandik : kesisimKontrolcu->getSandiklar()) {
+        for(const auto& sandik : objeYonetici->getSandiklar()) {
             durum.sandikPozisyonlar.push_back(sandik.getPozisyon());
         }
         durum.hareketSayaci = GirdiKontrolcu::hareketSayaci;

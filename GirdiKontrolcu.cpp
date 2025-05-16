@@ -26,7 +26,7 @@ void GirdiKontrolcu::GeriAl(ObjeYonetici* objeYonetici){
 
     objeYonetici->getKarakter()->PozisyonAta(oncekiDurum.karakterPozisyon);
     
-    auto& sandiklar = objeYonetici->getKesisimKontolcu()->getSandiklar();
+    auto& sandiklar = objeYonetici->getSandiklar();
     if (oncekiDurum.sandikPozisyonlar.size() == sandiklar.size()) {
         for (size_t i = 0; i < sandiklar.size(); ++i) {
             sandiklar[i].PozisyonAta(oncekiDurum.sandikPozisyonlar[i]);

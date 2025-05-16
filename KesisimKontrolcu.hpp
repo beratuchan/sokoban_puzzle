@@ -8,27 +8,22 @@
 #include "Hedef.hpp"
 #include "Harita.hpp"
 
+class ObjeYonetici;
 class Sandik;
-class Hedef;
 
 class KesisimKontrolcu{
     public:
-        KesisimKontrolcu(Harita* harita, std::vector<Sandik>* sandiklar, std::vector<Hedef>* hedefler);
+        KesisimKontrolcu(ObjeYonetici* objeYonetici);
 
         bool HucreSandik(Vector2 hucre) const;
         bool HucreHedef(Vector2 hucre) const;
         bool HucreDuvar(Vector2 hucre) const;
         bool HucreBos(Vector2 hucre) const;
         bool HucreBuz(Vector2 hucre);
+        bool HucreKarakter(Vector2 hucre) const;
         Sandik* HucredekiSandigiDondur(Vector2 hucre) const;
         Hedef* HucredekiHedefiDondur(Vector2 hucre) const;
-        std::vector<Sandik>& getSandiklar(){return *m_sandiklar;};
-        const std::vector<Sandik>& getSandiklar() const {return *m_sandiklar;};
-
     private:
-        Harita* m_harita;
-        std::vector<Sandik>* m_sandiklar;
-        std::vector<Hedef>* m_hedefler;
-
+        ObjeYonetici* objeYonetici;
 };
 #endif 

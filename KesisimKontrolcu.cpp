@@ -1,14 +1,13 @@
 #include "KesisimKontrolcu.hpp"
 
-KesisimKontrolcu::KesisimKontrolcu(Harita* harita, std::vector<Sandik>* sandiklar, std::vector<Hedef>* hedefler)
-    : m_harita(harita), m_sandiklar(sandiklar), m_hedefler(hedefler) {
-
+KesisimKontrolcu::KesisimKontrolcu(ObjeYonetici* objeYonetici)
+{
+    this->objeYonetici = objeYonetici;
 }
 
 bool KesisimKontrolcu::HucreSandik(Vector2 hucre) const {
-    if (!m_sandiklar || m_sandiklar->empty()) return false;
-    
-    for (auto& sandik : *m_sandiklar) {
+    auto& sandiklar = objeYonetici->getSandiklar();
+    for (auto& sandik : sandiklar) {
         if (sandik.getCizimPozisyonu().x == hucre.x && 
             sandik.getCizimPozisyonu().y == hucre.y) {
             return true;
@@ -17,10 +16,16 @@ bool KesisimKontrolcu::HucreSandik(Vector2 hucre) const {
     return false;
 }
 
+bool KesisimKontrolcu::HucreKarakter(Vector2 hucre) const {
+    if (!objeYonetici || !objeYonetici->getKarakter()) return false;
+    Vector2 karakterPoz = objeYonetici->getKarakter()->getCizimPozisyonu();
+    return (karakterPoz.x == hucre.x && karakterPoz.y == hucre.y);
+}
+
 bool KesisimKontrolcu::HucreHedef(Vector2 hucre) const {
-    if (!m_hedefler || m_hedefler->empty()) return false;
+    auto& hedefler = objeYonetici->getHedefler();
     
-    for (auto& hedef : *m_hedefler) {
+    for (auto& hedef : hedefler) {
         if (hedef.getCizimPozisyonu().x == hucre.x && 
             hedef.getCizimPozisyonu().y == hucre.y) {
             return true;
@@ -30,11 +35,11 @@ bool KesisimKontrolcu::HucreHedef(Vector2 hucre) const {
 }
 
 bool KesisimKontrolcu::HucreDuvar(Vector2 hucre) const {
-    if (!m_harita) return false;
+    auto* harita = objeYonetici->getHarita();
     
     int satir = (int)(hucre.y / 64);
     int sutun = (int)(hucre.x / 64);
-    auto izgara = m_harita->getIzgara();
+    auto izgara = harita->getIzgara();
 
     if (satir >= 0 && satir < (int)izgara.size() && sutun >= 0 && sutun < (int)izgara[0].size()) {
         return izgara[satir][sutun] == 1;
@@ -43,15 +48,15 @@ bool KesisimKontrolcu::HucreDuvar(Vector2 hucre) const {
 }
 
 bool KesisimKontrolcu::HucreBos(Vector2 hucre) const {
-    return (!HucreDuvar(hucre) && !HucreSandik(hucre));
+    return (!HucreDuvar(hucre) && !HucreSandik(hucre) && !HucreKarakter(hucre));
 }
 
 bool KesisimKontrolcu::HucreBuz(Vector2 hucre){
-    if (!m_harita) return false;
+    auto* harita = objeYonetici->getHarita();
     
     int satir = (int)(hucre.y / 64);
     int sutun = (int)(hucre.x / 64);
-    auto izgara = m_harita->getIzgara();
+    auto izgara = harita->getIzgara();
 
     if (satir >= 0 && satir < (int)izgara.size() && sutun >= 0 && sutun < (int)izgara[0].size()) {
         return izgara[satir][sutun] == 2;
@@ -60,26 +65,25 @@ bool KesisimKontrolcu::HucreBuz(Vector2 hucre){
 }
 
 Sandik* KesisimKontrolcu::HucredekiSandigiDondur(Vector2 hucre) const {
-    if (!m_sandiklar || m_sandiklar->empty()) return nullptr;
-    
-    for (size_t i = 0; i < m_sandiklar->size(); i++) {
-        Sandik& sandik = (*m_sandiklar)[i];
-        if (sandik.getCizimPozisyonu().x == hucre.x && 
-            sandik.getCizimPozisyonu().y == hucre.y) {
-            return &(*m_sandiklar)[i];
+    if (!objeYonetici) return nullptr; 
+    auto& sandiklar = objeYonetici->getSandiklar();
+    for (auto& sandik : sandiklar) {
+        Vector2 sandikPoz = sandik.getCizimPozisyonu();
+        if (std::abs(sandikPoz.x - hucre.x) < 0.001f && std::abs(sandikPoz.y - hucre.y) < 0.001f) {
+            return &sandik; 
         }
     }
-    return nullptr;
+    return nullptr; 
 }
 
 Hedef* KesisimKontrolcu::HucredekiHedefiDondur(Vector2 hucre) const{
-    if (!m_hedefler || m_hedefler->empty()) return nullptr;
+    auto& hedefler = objeYonetici->getHedefler();
     
-    for (size_t i = 0; i < m_hedefler->size(); i++) {
-        Hedef& hedef = (*m_hedefler)[i];
+    for (size_t i = 0; i < hedefler.size(); i++) {
+        Hedef& hedef = hedefler[i];
         if (hedef.getCizimPozisyonu().x == hucre.x && 
             hedef.getCizimPozisyonu().y == hucre.y) {
-            return &(*m_hedefler)[i];
+            return &hedefler[i];
         }
     }
     return nullptr;

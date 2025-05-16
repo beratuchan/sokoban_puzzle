@@ -5,14 +5,15 @@
 #include "DokuYonetici.hpp"
 #include "YonEnum.hpp"
 #include "GirdiKontrolcu.hpp"
-#include "KesisimKontrolcu.hpp"
+#include "ObjeYonetici.hpp"
 #include "DurumYonetici.hpp"
 
 class KesisimKontrolcu;
+class ObjeYonetici;
 
 class Karakter : public GameObject {
     public:
-        Karakter(Vector2 pozisyon, KesisimKontrolcu* kesisimKontrolcu, DurumYonetici* durumYonetici);
+        Karakter(Vector2 pozisyon, ObjeYonetici* objeYonetici, DurumYonetici* durumYonetici);
         ~Karakter();
         void Guncelle() override;
         void Ciz() override;
@@ -34,8 +35,9 @@ class Karakter : public GameObject {
         Vector2 gidilecekPozisyon;
         Vector2 oncekiPozisyon;
         Rectangle kare;
-        KesisimKontrolcu* kesisimKontrolcu;
+
         DurumYonetici* durumYonetici;
+        ObjeYonetici* objeYonetici;
         Yon mevcutYon;
 
         bool hareketEdiyor = false;
