@@ -28,6 +28,7 @@ class ObjeYonetici{
         std::vector<Hedef>& getHedefler(){return hedefler;};
         Karakter* getKarakter(){return karakter;};
         Harita* getHarita(){return harita;};
+        std::vector<Kapan>& getKapanlar() { return kapanlar; }
         KesisimKontrolcu* getKesisimKontolcu(){return kesisimKontrolcu;};
         DurumYonetici* getDurumYonetici(){return durumYonetici;};
         ObjeYonetici* getObjeYonetici() { return objeYonetici; }

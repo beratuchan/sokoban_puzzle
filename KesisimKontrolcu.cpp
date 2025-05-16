@@ -47,9 +47,22 @@ bool KesisimKontrolcu::HucreDuvar(Vector2 hucre) const {
     return false;
 }
 
+bool KesisimKontrolcu::HucreKapaliKapan(Vector2 hucre) const{
+    std::vector<Kapan> kapanlar = objeYonetici->getKapanlar();
+    for(Kapan kapan: kapanlar){
+        if(hucre.x == kapan.getCizimPozisyonu().x && hucre.y == kapan.getCizimPozisyonu().y){
+            if(!kapan.getAcikMi()){
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
 bool KesisimKontrolcu::HucreBos(Vector2 hucre) const {
-    return (!HucreDuvar(hucre) && !HucreSandik(hucre) && !HucreKarakter(hucre));
+    return (!HucreDuvar(hucre) && !HucreSandik(hucre) && !HucreKarakter(hucre) && !HucreKapaliKapan(hucre));
 }
+
 
 bool KesisimKontrolcu::HucreBuz(Vector2 hucre){
     auto* harita = objeYonetici->getHarita();

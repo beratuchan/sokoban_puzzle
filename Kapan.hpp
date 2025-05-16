@@ -13,6 +13,8 @@ class Kapan : public GameObject{
         void Guncelle() override;
         void AcKapa();
         bool TumAnahtarlarBasili();
+        Vector2 getCizimPozisyonu(){return cizimPozisyonu;};
+        bool getAcikMi(){return acikMi;};
     private:
         Vector2 cizimPozisyonu;
         std::vector<Vector2> anahtarCizimPozisyonlari;

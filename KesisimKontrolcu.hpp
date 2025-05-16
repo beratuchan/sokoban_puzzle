@@ -21,6 +21,8 @@ class KesisimKontrolcu{
         bool HucreBos(Vector2 hucre) const;
         bool HucreBuz(Vector2 hucre);
         bool HucreKarakter(Vector2 hucre) const;
+
+        bool HucreKapaliKapan(Vector2 hucre) const;
         Sandik* HucredekiSandigiDondur(Vector2 hucre) const;
         Hedef* HucredekiHedefiDondur(Vector2 hucre) const;
     private:
