@@ -5,13 +5,15 @@ ObjeYonetici::ObjeYonetici(int seviyeNo){
 
     sandikStructlar = SEVIYELER[seviyeNo].sandiklar;
     hedefStructlar = SEVIYELER[seviyeNo].hedefler;
+    kapanStructlar = SEVIYELER[seviyeNo].kapanlar;
 
     kesisimKontrolcu = new KesisimKontrolcu(harita, &sandiklar, &hedefler);
     durumYonetici = new DurumYonetici();
     
     HedefleriDoldur();
     SandiklariDoldur();
-    
+    KapanlariDoldur();
+
     karakter = new Karakter(SEVIYELER[seviyeNo].karakter, kesisimKontrolcu, durumYonetici);
 
     ObjeleriDoldur();
@@ -47,14 +49,24 @@ void ObjeYonetici::HedefleriDoldur(){
     }
 }
 
+void ObjeYonetici::KapanlariDoldur(){
+    for(KapanStruct kapanStruct : kapanStructlar){
+        kapanlar.emplace_back(kapanStruct.kapanpozisyon, kapanStruct.anahtarpozisyonlari, kapanStruct.acikMi, kesisimKontrolcu);
+    }
+}
+
 void ObjeYonetici::ObjeleriDoldur(){
     objeler.push_back(harita);
     for(size_t i = 0; i < hedefler.size(); i++){
         objeler.push_back(&hedefler[i]);
     }    
+    for(size_t i = 0; i < kapanlar.size(); i++){
+        objeler.push_back(&kapanlar[i]);
+    }   
     for(size_t i = 0; i < sandiklar.size(); i++){
         objeler.push_back(&sandiklar[i]);
     }
+ 
     objeler.push_back(karakter);
 }
 
