@@ -28,20 +28,10 @@ void Kapan::Guncelle(){
 }
 
 void Kapan::AcKapa(){
-    if(tumAnahtarlarBasiliMi){
-        if(!TumAnahtarlarBasili()){
-            if(acikMi) acikMi=false;
-            else acikMi=true;
-            tumAnahtarlarBasiliMi=false;
-        }
-    }else{
-        if(TumAnahtarlarBasili()){
-            if(acikMi) acikMi=false;
-            else acikMi=true;
-            tumAnahtarlarBasiliMi=false;
-        }
+    if(tumAnahtarlarBasiliMi!=TumAnahtarlarBasili()){
+        tumAnahtarlarBasiliMi = TumAnahtarlarBasili();
+        acikMi = !acikMi;
     }
-
 }
 
 bool Kapan::TumAnahtarlarBasili(){
