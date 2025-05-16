@@ -23,15 +23,6 @@ void Sandik::PozisyonAta(Vector2 yeniPozisyon){
     hareketEdiyor = false;
 }
 
-Vector2 Sandik::getCizimPozisyonu(){
-    return cizimPozisyonu;
-}
-
-bool Sandik::getHedefteMi(){
-    return hedefteMi;
-}
-
-
 void Sandik::Guncelle(){
     if(buzdaKayiyor){
         BuzdaKay();

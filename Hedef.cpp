@@ -19,14 +19,6 @@ bool Hedef::DoluMu(){
     else return false;
 }
 
-Vector2 Hedef::getCizimPozisyonu(){
-    return cizimPozisyonu;
-}
-
-std::string Hedef::getRenk(){
-    return renk;
-}
-
 void Hedef::Guncelle(){
     
 };

@@ -16,10 +16,6 @@ Harita::~Harita(){
     UnloadTexture(buz);
 }
 
-std::vector<std::vector<int>> Harita::getIzgara(){
-    return izgara;
-};
-
 void Harita::Ciz(){
     for(int i = 0; i < satirSayisi ; i++){
         for(int j = 0; j < sutunSayisi ; j++){

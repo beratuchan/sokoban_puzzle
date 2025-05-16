@@ -11,7 +11,7 @@ public:
     ~Harita();
     void Guncelle() override;
     void Ciz() override;
-    std::vector<std::vector<int>> getIzgara();
+    std::vector<std::vector<int>> getIzgara(){return izgara;};
 
 private:
     std::vector<std::vector<int>> izgara;

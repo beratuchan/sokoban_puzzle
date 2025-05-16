@@ -22,12 +22,13 @@ class Karakter : public GameObject {
         void DurumKaydet();
         void PozisyonAta(Vector2 yeniPozisyon);
         Vector2 getCizimPozisyonu() {return cizimPozisyonu;};
-        void HareketEttir();
-        void BuzdaKay();
-        
+
     private:
         void HareketTetikle(Vector2 gidilecekPozisyon);
         void BuzdaKayTetikle();
+        void HareketEttir();
+        void BuzdaKay();
+        
         Texture2D objeDokusu;
         Vector2 cizimPozisyonu;
         Vector2 gidilecekPozisyon;

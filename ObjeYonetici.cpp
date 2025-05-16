@@ -35,22 +35,6 @@ ObjeYonetici::~ObjeYonetici() {
     delete durumYonetici;
 }
 
-std::vector<Sandik>& ObjeYonetici::getSandiklar(){
-    return sandiklar;
-}
-
-std::vector<Hedef>& ObjeYonetici::getHedefler(){
-    return hedefler;
-}
-
-Karakter* ObjeYonetici::getKarakter(){
-    return karakter;
-}
-
-Harita* ObjeYonetici::getHarita(){
-    return harita;
-}
-
 void ObjeYonetici::SandiklariDoldur(){
     for(SandikStruct sandikStruct : sandikStructlar){
         sandiklar.emplace_back(sandikStruct.pozisyon, sandikStruct.renk, kesisimKontrolcu);

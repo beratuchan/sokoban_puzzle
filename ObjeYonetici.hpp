@@ -22,10 +22,10 @@ class ObjeYonetici{
         ~ObjeYonetici();
         void Dongu();
 
-        std::vector<Sandik>& getSandiklar();
-        std::vector<Hedef>& getHedefler();
-        Karakter* getKarakter();
-        Harita* getHarita();
+        std::vector<Sandik>& getSandiklar(){return sandiklar;};
+        std::vector<Hedef>& getHedefler(){return hedefler;};
+        Karakter* getKarakter(){return karakter;};
+        Harita* getHarita(){return harita;};
         KesisimKontrolcu* getKesisimKontolcu(){return kesisimKontrolcu;};
         DurumYonetici* getDurumYonetici(){return durumYonetici;};
         ObjeYonetici* getObjeYonetici() { return objeYonetici; }
@@ -48,7 +48,6 @@ class ObjeYonetici{
 
         std::vector<SandikStruct> sandikStructlar;
         std::vector<HedefStruct> hedefStructlar;
-
 };
 
 #endif
