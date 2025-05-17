@@ -4,10 +4,11 @@
 #include "GameObject.hpp"
 #include "DokuYonetici.hpp"
 #include "KesisimKontrolcu.hpp"
+#include "Renkler.hpp"
 
 class Kapan : public GameObject{
     public:
-        Kapan(Vector2 cizimPozisyonu, std::vector<Vector2> anahtarCizimPozisyonu, bool acik, KesisimKontrolcu* kesisimKontrolcu);
+        Kapan(Vector2 cizimPozisyonu, std::vector<Vector2> anahtarCizimPozisyonu, bool acik, RenkEnum kapanrenk, KesisimKontrolcu* kesisimKontrolcu);
         ~Kapan();
         void Ciz() override;
         void Guncelle() override;
@@ -18,13 +19,15 @@ class Kapan : public GameObject{
     private:
         Vector2 cizimPozisyonu;
         std::vector<Vector2> anahtarCizimPozisyonlari;
-        Texture2D objedokusu;
-        Rectangle acik = {0,0,64,64};
-        Rectangle kapali = {64,0,64,64};
-        Rectangle anahtar = {64*2,0,64,64};
+        Texture2D objedokusu= DokuYonetici::DokuYukle("resources/kapanlar.png"); ;
+        std::string renk;
         bool acikMi;
         bool tumAnahtarlarBasiliMi;
         KesisimKontrolcu* kesisimKontrolcu;
+        RenkEnum kapanrenk;
+        Rectangle acik;
+        Rectangle kapali;
+        Rectangle anahtar;
 };
 
 #endif

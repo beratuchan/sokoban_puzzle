@@ -48,7 +48,7 @@ void ObjeYonetici::HedefleriDoldur(){
 
 void ObjeYonetici::KapanlariDoldur(){
     for(KapanStruct kapanStruct : kapanStructlar){
-        kapanlar.emplace_back(kapanStruct.kapanpozisyon, kapanStruct.anahtarpozisyonlari, kapanStruct.acikMi, kesisimKontrolcu);
+        kapanlar.emplace_back(kapanStruct.kapanpozisyon, kapanStruct.anahtarpozisyonlari, kapanStruct.acikMi, kapanStruct.renk,kesisimKontrolcu);
     }
 }
 
