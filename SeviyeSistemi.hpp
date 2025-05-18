@@ -17,13 +17,12 @@ class SeviyeSistemi {
         bool TumSeviyelerBittiMi() const;
         void MesajVer();
         void ButonEkle();
+        void BaslangicEkrani();
         ObjeYonetici* getObjeYonetici() { return objeYonetici; }
-
+        bool SeviyeTamamlandiMi() const;
     private:
         int mevcutSeviye;
         ObjeYonetici* objeYonetici;
-        bool SeviyeTamamlandiMi() const;
-        
         Texture2D seviyetamam = DokuYonetici::DokuYukle("resources/seviyesonu.png");
         Texture2D sonraki = DokuYonetici::DokuYukle("resources/sagoklar.png");
         Texture2D onceki = DokuYonetici::DokuYukle("resources/soloklar.png");

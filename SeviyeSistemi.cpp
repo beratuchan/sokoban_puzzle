@@ -23,6 +23,7 @@ bool SeviyeSistemi::SeviyeTamamlandiMi() const {
     }
     return true;
 }
+
 void SeviyeSistemi::ButonEkle(){
         float ekranyukseklik = 11*64;
         float ekrangenislik = (9*64);
@@ -33,15 +34,7 @@ void SeviyeSistemi::ButonEkle(){
         Rectangle buton2 = {arabosluk*2 + butongenisligi, ekranyukseklik+10, butongenisligi, 53};
         Rectangle buton3 = {arabosluk*3 + butongenisligi*2, ekranyukseklik+10, butongenisligi, 53};
 
-        Color buton1Renk = LIGHTGRAY;
-        Color buton2Renk = LIGHTGRAY;
-        Color buton3Renk = LIGHTGRAY;
-
         Vector2 fare = GetMousePosition();
-
-        DrawRectangleRec(buton1, buton1Renk);
-        DrawRectangleRec(buton2, buton2Renk);
-        DrawRectangleRec(buton3, buton3Renk);
 
         DokuYonetici::DokuCiz(onceki,{0,0,53,53},{buton1.x+2,buton1.y});
         DokuYonetici::DokuCiz(tekrar,{0,0,53,53},{buton2.x+2,buton2.y});
@@ -80,15 +73,7 @@ void SeviyeSistemi::OncekiSeviye() {
 void SeviyeSistemi::MesajVer(){
     if(SeviyeTamamlandiMi()) {
         DokuYonetici::DokuCiz(seviyetamam,{0,0,ekrangenislik/2,ekranyukseklik/2},  {(ekrangenislik/4),(ekranyukseklik/4)});
-        Color buton1Renk = LIGHTGRAY;
-        Color buton2Renk = LIGHTGRAY;
-        Color buton3Renk = LIGHTGRAY;
-
         Vector2 fare = GetMousePosition();
-
-        DrawRectangleRec(buton1, buton1Renk);
-        DrawRectangleRec(buton2, buton2Renk);
-        DrawRectangleRec(buton3, buton3Renk);
 
         DokuYonetici::DokuCiz(onceki,{0,0,53,53},{2*bos+ekrangenislik/4,255+ekranyukseklik/4+bos});
         DokuYonetici::DokuCiz(tekrar,{0,0,53,53},{3*bos+ekrangenislik/4+butongen + (2*butongen-53)/2,255+ekranyukseklik/4+bos});
