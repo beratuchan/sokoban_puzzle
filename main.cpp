@@ -16,7 +16,6 @@ int main() {
 
     SeviyeSistemi seviyeSistemi;
     BaslangicEkrani baslangicEkrani;
-    OyunYonetici oyunYonetici;
 
     OyunDurumu mevcutDurum = OyunDurumu::BASLANGIC;
     
@@ -27,7 +26,7 @@ int main() {
                 break;
                 
             case OyunDurumu::OYUN:
-                oyunYonetici.Guncelle();
+                seviyeSistemi.Dongu();
                 break;
         }
 
@@ -39,7 +38,7 @@ int main() {
                 break;
                 
             case OyunDurumu::OYUN:
-                oyunYonetici.Ciz();
+                GirdiKontrolcu::HareketKontrol(seviyeSistemi.getObjeYonetici(), seviyeSistemi);
                 break;
         }
         
