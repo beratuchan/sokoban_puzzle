@@ -8,7 +8,6 @@
 #include "SeviyeSistemi.hpp"
 #include "OyunDurumuEnum.hpp"
 #include "BaslangicEkrani.hpp"
-#include "OyunYonetici.hpp"
 
 int main() {
     SetTargetFPS(60);
@@ -20,24 +19,16 @@ int main() {
     OyunDurumu mevcutDurum = OyunDurumu::BASLANGIC;
     
     while (!WindowShouldClose()) {
-        switch(mevcutDurum) {
-            case OyunDurumu::BASLANGIC:
-                mevcutDurum = baslangicEkrani.Guncelle();
-                break;
-                
-            case OyunDurumu::OYUN:
-                seviyeSistemi.Dongu();
-                break;
-        }
-
         BeginDrawing();
         ClearBackground((Color){122, 146, 148, 255});
         switch(mevcutDurum) {
             case OyunDurumu::BASLANGIC:
+                mevcutDurum = baslangicEkrani.Guncelle();
                 baslangicEkrani.Ciz();
                 break;
                 
             case OyunDurumu::OYUN:
+                seviyeSistemi.Dongu();
                 GirdiKontrolcu::HareketKontrol(seviyeSistemi.getObjeYonetici(), seviyeSistemi);
                 break;
         }
