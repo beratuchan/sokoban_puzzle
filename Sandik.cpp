@@ -8,22 +8,87 @@ Sandik::Sandik(Vector2 cizim_pozisyonu, std::string renk, KesisimKontrolcu* kesi
     this->cizimPozisyonu = cizim_pozisyonu;
     this->dokuYolu = GorselSec();
     this->objeDokusu = DokuYonetici::DokuYukle(dokuYolu);
+    oncekiHedefDurumu = hedefteMi;
+    this->kare = {0, 0, (float)64, (float)64};
+    this->hedefKare = kare;
+    this->cizilmeliMi = true;
 };
 
 Sandik::~Sandik(){
-    
+
+};
+
+void Sandik::setCizilmeliMi(bool cizilmeliMi){
+    this->cizilmeliMi = cizilmeliMi;
+};
+
+bool Sandik::RayUygunMu(int rayNo, Yon yon){
+    int rayNoMevcut = kesisimKontrolcu->HucreRay(cizimPozisyonu);
+    if(rayNoMevcut!=0){
+        switch(yon){
+            case Yon::SAGA:
+                if(rayNoMevcut == 6 || rayNoMevcut == 8 || rayNoMevcut == 11 || rayNoMevcut == 13)
+                    return false;
+                break;
+            case Yon::SOLA:
+                if(rayNoMevcut == 6 || rayNoMevcut == 9 || rayNoMevcut == 10 || rayNoMevcut == 12)
+                    return false;
+                break;
+            case Yon::ASAGI:
+                if(rayNoMevcut==7 || rayNoMevcut==8 || rayNoMevcut == 9 || rayNoMevcut == 15)
+                    return false;
+                break;
+            case Yon::YUKARI:
+                if(rayNoMevcut==7 || rayNoMevcut==10 || rayNoMevcut == 11 || rayNoMevcut == 14)
+                    return false;
+                break;
+            case Yon::HAREKETSIZ:
+                break;
+        }
+    }
+    switch(yon){
+        case Yon::SAGA:
+            if(rayNo == 6 || rayNo == 9 || rayNo == 10 || rayNo == 12)
+                return false;
+            break;
+        case Yon::SOLA:
+            if(rayNo == 6 || rayNo == 8 || rayNo== 11 || rayNo == 13)
+                return false;
+            break;
+        case Yon::ASAGI:
+            if(rayNo == 7 || rayNo == 10 || rayNo== 11 || rayNo == 14)
+                return false;
+            break;
+        case Yon::YUKARI:
+            if(rayNo == 7 || rayNo == 8 || rayNo== 9 || rayNo == 15)
+                return false;
+            break;
+        case Yon::HAREKETSIZ:
+            break;
+    }
+    return true;
 };
 
 bool Sandik::AksiyonaGecebilir(Yon yon){
-    return kesisimKontrolcu->HucreBos(IleriHucrePozisyonu(yon,cizimPozisyonu));
+    if(!kesisimKontrolcu->HucreBos(IleriHucrePozisyonu(yon,cizimPozisyonu)))
+        return false;
+    int rayNo = kesisimKontrolcu->HucreRay(IleriHucrePozisyonu(yon,cizimPozisyonu));
+    return RayUygunMu(rayNo, yon);
 }
 
-void Sandik::PozisyonAta(Vector2 yeniPozisyon){
+void Sandik::setPozisyon(Vector2 yeniPozisyon){
     cizimPozisyonu = yeniPozisyon;
     hareketEdiyor = false;
 }
 
+void Sandik::setRenk(std::string renk){
+    this->renk = renk;
+}
+
 void Sandik::Guncelle(){
+    if(dusuyor && !hareketEdiyor){
+        Dus();
+    }
     if(buzdaKayiyor){
         BuzdaKay();
         return;
@@ -53,12 +118,51 @@ Vector2 Sandik::IleriHucrePozisyonu(Yon yon, Vector2& baslangicPoz){
 
 void Sandik::Tetikle(Yon yon){
     Vector2 ileriHucre = IleriHucrePozisyonu(yon, cizimPozisyonu);
-    if(kesisimKontrolcu->HucreBos(ileriHucre)){
+    if(kesisimKontrolcu->HucrePortal(ileriHucre)) {
+        PortalTetikle(yon);
+        return;
+    }
+    if(kesisimKontrolcu->HucreKaraDelik(ileriHucre)==4){
+        DusmeTetikle(yon);
+    }
+    else if(kesisimKontrolcu->HucreBos(ileriHucre)){
         if(kesisimKontrolcu->HucreBuz(ileriHucre)){
             BuzdaKayTetikle(yon);
         }
         else HareketTetikle(yon);
     }
+}
+
+void Sandik::PortalTetikle(Yon yon){
+    Vector2 ileriHucre = IleriHucrePozisyonu(yon, cizimPozisyonu);
+    
+    Portal* portal = kesisimKontrolcu->HucredekiPortaliDondur(ileriHucre);
+    Yon yeniYon = portal->IsinlamaSonrasiYon(ileriHucre, yon);
+
+    if(yeniYon == Yon::HAREKETSIZ) return;
+
+    cizimPozisyonu = portal->CikisPortali(ileriHucre);
+    ileriHucre = IleriHucrePozisyonu(yeniYon, cizimPozisyonu);
+    HareketTetikle(yeniYon);
+};
+
+void Sandik::Dus(){
+        Vector2 tempCizimPozisyonu = cizimPozisyonu;
+        if ((kare.width != 0) && (kare.height != 0) && (cizimPozisyonu.x != tempCizimPozisyonu.x / 2) && (cizimPozisyonu.y != tempCizimPozisyonu.y / 2)) {
+            hedefKare.width-=2.0f;
+            hedefKare.height-=2.0f;
+            if(hedefKare.width<=0 || hedefKare.height <= 0){
+                hedefKare.height = 0;
+                hedefKare.width = 0;
+                kesisimKontrolcu->HucreyiSonrakiFazaGecir(cizimPozisyonu);
+                silinmeliMi = true;
+            }
+        }
+}
+
+void Sandik::DusmeTetikle(Yon yon){
+        HareketTetikle(yon);
+        dusuyor=true;
 }
 
 void Sandik::BuzdaKay() {
@@ -134,11 +238,21 @@ void Sandik::HareketEttir(){
     }
 };
 
-
-
 void Sandik::Ciz(){
-    DokuYonetici::DokuCiz(objeDokusu,{0,0,64,64},cizimPozisyonu);
+    if(!cizilmeliMi) return;
+    if(dusuyor && !hareketEdiyor){
+        Vector2 origin = {hedefKare.width/2, hedefKare.height/2};
+        Rectangle destRec = {
+            (2*cizimPozisyonu.x+64)/2,
+            (2*cizimPozisyonu.y+64)/2,
+            hedefKare.width,
+            hedefKare.height
+        };
+        DrawTexturePro(objeDokusu, kare, destRec, origin, 0.0f, WHITE);
+    }else
+        DokuYonetici::DokuCiz(objeDokusu, kare, cizimPozisyonu);
 };
+
 
 std::string Sandik::GorselSec(){
     if(kesisimKontrolcu->HucreHedef(cizimPozisyonu)){

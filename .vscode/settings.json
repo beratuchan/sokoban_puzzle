@@ -59,6 +59,7 @@
 		"typeinfo": "cpp",
 		"variant": "cpp",
 		"iostream": "cpp",
-		"istream": "cpp"
+		"istream": "cpp",
+		"*.m": "cpp"
 	}
 }

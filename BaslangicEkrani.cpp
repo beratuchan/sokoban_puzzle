@@ -6,7 +6,7 @@ BaslangicEkrani::BaslangicEkrani(){
     cikisButon = { (9*64 - 200)/2, 400, 200, 50 };
 }
 BaslangicEkrani::~BaslangicEkrani(){
-    UnloadTexture(maskot);
+
 }
 
 OyunDurumu BaslangicEkrani::Guncelle(){

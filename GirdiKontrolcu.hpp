@@ -15,6 +15,7 @@ class GirdiKontrolcu{
         static int hareketSayaci;
     private:
         static void GeriAl(ObjeYonetici* objeYonetici);
+        static void CizimKontrol(SeviyeSistemi& seviyeSistemi);
 };
 
 #endif

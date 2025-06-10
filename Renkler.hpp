@@ -5,5 +5,6 @@ enum class RenkEnum {
     sari,
     pembe,
     kirmizi,
-    mor
+    mor,
+    mavi
 };

@@ -13,6 +13,7 @@ class Hedef : public GameObject {
         ~Hedef();
         void Guncelle() override;
         void Ciz() override;
+        bool getSilinmeliMi() override{return silinmeliMi;};
         std::string GorselSec();
         bool DoluMu();
         Vector2 getCizimPozisyonu(){return cizimPozisyonu;};
@@ -23,5 +24,6 @@ class Hedef : public GameObject {
         std::string renk;
         Vector2 cizimPozisyonu;
         KesisimKontrolcu* kesisimKontrolcu;
+        bool silinmeliMi = false;
 };
 #endif

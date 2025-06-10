@@ -11,9 +11,20 @@ void GirdiKontrolcu::HareketKontrol(ObjeYonetici* objeYonetici, SeviyeSistemi& s
     else if(IsKeyPressed(KEY_D)||IsKeyPressed(KEY_RIGHT)) mevcutYon = Yon::SAGA;
     else if(IsKeyPressed(KEY_A)||IsKeyPressed(KEY_LEFT)) mevcutYon = Yon::SOLA;
     else if (IsKeyPressed(KEY_G)) GeriAl(objeYonetici);
-    else if (IsKeyPressed(KEY_T)){
-        seviyeSistemi.Baslat();
-    } 
+    else if(seviyeSistemi.getObjeYonetici()->getKarakterler().size()>1&&IsKeyPressed(KEY_E)){seviyeSistemi.getObjeYonetici()->KarakterDegistir();}
+    else if(IsKeyPressed(KEY_T)){seviyeSistemi.Baslat();}
+    else if(IsKeyPressed(KEY_TAB)){CizimKontrol(seviyeSistemi);}
+}
+
+void GirdiKontrolcu::CizimKontrol(SeviyeSistemi& seviyeSistemi){
+    std::vector<Karakter*> karakterler = seviyeSistemi.getObjeYonetici()->getKarakterler();
+    std::vector<Sandik*> sandiklar = seviyeSistemi.getObjeYonetici()->getSandiklar();
+    for(auto& sandik: sandiklar){
+        sandik->setCizilmeliMi(!sandik->getCizilmeliMi());
+    }
+    for(auto& karakter: karakterler){
+        karakter->setCizilmeliMi(!karakter->getCizilmeliMi());
+    }
 }
 
 void GirdiKontrolcu::GeriAl(ObjeYonetici* objeYonetici){
@@ -24,14 +35,33 @@ void GirdiKontrolcu::GeriAl(ObjeYonetici* objeYonetici){
 
     Durum oncekiDurum = durumYonetici->GeriAl(); 
 
-    objeYonetici->getKarakter()->PozisyonAta(oncekiDurum.karakterPozisyon);
+    objeYonetici->getHarita()->setIzgara(oncekiDurum.haritaIzgara);
     
-    auto& sandiklar = objeYonetici->getSandiklar();
-    if (oncekiDurum.sandikPozisyonlar.size() == sandiklar.size()) {
-        for (size_t i = 0; i < sandiklar.size(); ++i) {
-            sandiklar[i].PozisyonAta(oncekiDurum.sandikPozisyonlar[i]);
+    auto& karakterler = objeYonetici->getKarakterler();
+    if(objeYonetici->getDurumYonetici()->getKarakterSilindiMi()){
+        objeYonetici->YeniKarakterOlustur(oncekiDurum.karakterStructlar.back().pozisyon);
+        objeYonetici->getDurumYonetici()->setKarakterSilindiMi(false);
+    }
+    if (oncekiDurum.karakterStructlar.size() == karakterler.size()) {
+        for (size_t i = 0; i < karakterler.size(); ++i) {
+            karakterler[i]->PozisyonAta(oncekiDurum.karakterStructlar[i].pozisyon);
+            karakterler[i]->setAktifMi(oncekiDurum.karakterStructlar[i].AktifMi);
+            karakterler[i]->setKarakterNo(oncekiDurum.karakterStructlar[i].karakterNo);
         }
     }
-
+    
+    
+    
+    auto& sandiklar = objeYonetici->getSandiklar();
+    if(objeYonetici->getDurumYonetici()->getSandikSilindiMi()){
+        objeYonetici->YeniSandikOlustur(oncekiDurum.sandikStructlar.back());
+    }
+    if (oncekiDurum.sandikStructlar.size() == sandiklar.size()) {
+        for (size_t i = 0; i < sandiklar.size(); ++i) {
+            sandiklar[i]->setPozisyon(oncekiDurum.sandikStructlar[i].pozisyon);
+            sandiklar[i]->setRenk(oncekiDurum.sandikStructlar[i].renk);
+        }
+    }
+    
     hareketSayaci = oncekiDurum.hareketSayaci;
 }

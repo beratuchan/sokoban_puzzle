@@ -12,6 +12,7 @@ class Kapan : public GameObject{
         ~Kapan();
         void Ciz() override;
         void Guncelle() override;
+        bool getSilinmeliMi() override{return silinmeliMi;};
         void AcKapa();
         bool TumAnahtarlarBasili();
         Vector2 getCizimPozisyonu(){return cizimPozisyonu;};
@@ -28,6 +29,7 @@ class Kapan : public GameObject{
         Rectangle acik;
         Rectangle kapali;
         Rectangle anahtar;
+        bool silinmeliMi = false;
 };
 
 #endif

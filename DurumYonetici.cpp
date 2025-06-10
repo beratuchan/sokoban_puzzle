@@ -1,5 +1,9 @@
 #include "DurumYonetici.hpp"
 
+DurumYonetici::DurumYonetici(ObjeYonetici* objeYonetici){
+    this->objeYonetici = objeYonetici;
+}
+
 void DurumYonetici::Kaydet(const Durum& durum) {
     if (mevcutIndex < (int)durumlar.size() - 1) {
         durumlar.erase(durumlar.begin() + mevcutIndex + 1, durumlar.end());
@@ -15,6 +19,20 @@ Durum DurumYonetici::GeriAl() {
         return dondurulecek;
     }
     return Durum{}; 
+}
+
+void DurumYonetici::setKarakterSilindiMi(bool silindi){
+    if(silindi)
+        karakterSilindiMi = true;
+    else
+        karakterSilindiMi = false;
+}
+
+void DurumYonetici::setSandikSilindiMi(bool silindi){
+    if(silindi || ((int)objeYonetici->getSandiklar().size() < objeYonetici->getSandikSayisi()))
+        sandikSilindiMi = true;
+    else    
+        sandikSilindiMi = false;
 }
 
 bool DurumYonetici::GeriAlinabilir() {

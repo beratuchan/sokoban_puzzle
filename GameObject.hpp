@@ -7,6 +7,7 @@ public:
     virtual ~GameObject() = default;
     virtual void Guncelle() = 0;
     virtual void Ciz() = 0;
+    virtual bool getSilinmeliMi() = 0;
 };
 
 #endif
