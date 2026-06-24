@@ -83,7 +83,51 @@ Proje, nesne yönelimli prensiplere göre modüler şekilde tasarlanmıştır. S
 
 ---
 
-## 5. Kullanıcı Arayüzü
+## 5. Kurulum ve Derleme
+
+### Gereksinimler
+
+- [Raylib 4.5.0](https://github.com/raysan5/raylib/releases/tag/4.5.0)
+- C++14 destekli derleyici
+  - **Windows:** w64devkit (Raylib Windows kurulumunda dahili gelir)
+  - **Linux:** g++
+  - **macOS:** clang++
+
+### Windows
+
+1. Raylib 4.5.0'ı indirip kurun (`C:/raylib` dizinine).
+2. Projeyi Raylib dizini içine yerleştirin:
+   ```
+   C:/raylib/
+   ├── src/
+   ├── sokoban_puzzle/   ← projeyi buraya koyun
+   └── ...
+   ```
+3. Proje dizininde terminali açın ve derleyin:
+   ```bash
+   mingw32-make
+   ```
+4. Oluşan `game.exe` dosyasını çalıştırın.
+
+### Linux
+
+```bash
+sudo apt install libraylib-dev   # veya raylib'i kaynaktan derleyin
+make
+./game
+```
+
+### macOS
+
+```bash
+brew install raylib
+make
+./game
+```
+
+---
+
+## 6. Kullanıcı Arayüzü
 
 - **Başlangıç Menüsü:** "Başla" butonu ile oyuncuyu karşılar.
 - **Oyun İçi Arayüz:** Seviye numarası ve kontrol butonları (önceki seviye, seviye yenileme, sonraki seviyeye).
